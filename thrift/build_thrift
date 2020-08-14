@@ -1,0 +1,6 @@
+#/bin/bash
+
+thrift --gen py -out ../pygen types.thrift && thriftpyi . --output ../pygen/types --strict-optional
+mv ../pygen/types/types.pyi ../pygen/types/ttypes.pyi
+echo 'from . import ttypes' > ../pygen/types/__init__.pyi
+# thrift --gen js:ts -out ../jsgen types.thrift
