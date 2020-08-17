@@ -8,3 +8,4 @@ frontend/dist
 frontend/.env.local
 frontend/.env.*.local
 frontend/npm-debug.log*
+frontend/**/*.js.map
