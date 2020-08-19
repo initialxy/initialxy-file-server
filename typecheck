@@ -1,2 +1,3 @@
 #!/bin/bash
 mypy api.py
+tsc -p frontend
