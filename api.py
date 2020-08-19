@@ -20,7 +20,7 @@ def make_app() -> tornado.web.Application:
         r"/(.*)",
         tornado.web.StaticFileHandler,
         {
-          "path": os.path.join(os.path.dirname(__file__), "frontend/static"),
+          "path": os.path.join(os.path.dirname(__file__), "frontend/dist"),
           "default_filename": "index.html",
         },
       ),

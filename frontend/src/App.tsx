@@ -3,10 +3,7 @@ import HelloWorld from './components/HelloWorld';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
-  },
   setup() {
-    return () => <HelloWorld msg="initialxy"/>;
+    return () => <HelloWorld msg="initialxy" />;
   }
 });

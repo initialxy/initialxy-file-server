@@ -6,7 +6,7 @@ import os
 import tornado.web
 
 CONFIG = get_config()
-INDEX_FILE = "frontend/static/index.html"
+INDEX_FILE = "frontend/dist/index.html"
 DIR_THUMBNAIL_FILE = "thumbnail.jpg"
 THUMBNAILS_DIR = "__thumbnails"
 
