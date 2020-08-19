@@ -4,6 +4,7 @@ import HelloWorld from './components/HelloWorld';
 export default defineComponent({
   name: 'App',
   setup() {
-    return () => <HelloWorld msg="initialxy" />;
+    const test = (msg: string): void => console.log(msg);
+    return () => <HelloWorld msg="initialxy" onClick={test}/>;
   }
 });
