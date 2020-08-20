@@ -1,9 +1,9 @@
-from thrift.protocol.TJSONProtocol import TJSONProtocolFactory
+from thrift.protocol.TBinaryProtocol import TBinaryProtocolFactory
 from thrift.TSerialization import serialize
 
 
-def serialize_json(thrift_obj: object) -> str:
-  return str(serialize(
+def serialize_bin(thrift_obj: object) -> bytes:
+  return serialize(
     thrift_obj,
-    protocol_factory=TJSONProtocolFactory(),
-  ))
+    protocol_factory=TBinaryProtocolFactory(),
+  )

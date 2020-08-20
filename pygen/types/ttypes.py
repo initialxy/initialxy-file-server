@@ -6,20 +6,13 @@
 #  options string: py
 #
 
-from thrift.Thrift import (
-    TType,
-    TMessageType,
-    TFrozenDict,
-    TException,
-    TApplicationException,
-)
+from thrift.Thrift import TType, TMessageType, TFrozenDict, TException, TApplicationException
 from thrift.protocol.TProtocol import TProtocolException
 from thrift.TRecursive import fix_spec
 
 import sys
 
 from thrift.transport import TTransport
-
 all_structs = []
 
 
@@ -31,18 +24,13 @@ class Item(object):
 
     """
 
-    def __init__(
-        self, is_file=None, name=None,
-    ):
+
+    def __init__(self, is_file=None, name=None,):
         self.is_file = is_file
         self.name = name
 
     def read(self, iprot):
-        if (
-            iprot._fast_decode is not None
-            and isinstance(iprot.trans, TTransport.CReadableTransport)
-            and self.thrift_spec is not None
-        ):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -57,11 +45,7 @@ class Item(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.name = (
-                        iprot.readString().decode("utf-8")
-                        if sys.version_info[0] == 2
-                        else iprot.readString()
-                    )
+                    self.name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             else:
@@ -71,34 +55,31 @@ class Item(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(
-                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
-            )
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin("Item")
+        oprot.writeStructBegin('Item')
         if self.is_file is not None:
-            oprot.writeFieldBegin("is_file", TType.BOOL, 1)
+            oprot.writeFieldBegin('is_file', TType.BOOL, 1)
             oprot.writeBool(self.is_file)
             oprot.writeFieldEnd()
         if self.name is not None:
-            oprot.writeFieldBegin("name", TType.STRING, 2)
-            oprot.writeString(
-                self.name.encode("utf-8") if sys.version_info[0] == 2 else self.name
-            )
+            oprot.writeFieldBegin('name', TType.STRING, 2)
+            oprot.writeString(self.name.encode('utf-8') if sys.version_info[0] == 2 else self.name)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
     def validate(self):
         if self.is_file is None:
-            raise TProtocolException(message="Required field is_file is unset!")
+            raise TProtocolException(message='Required field is_file is unset!')
         if self.name is None:
-            raise TProtocolException(message="Required field name is unset!")
+            raise TProtocolException(message='Required field name is unset!')
         return
 
     def __repr__(self):
-        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
-        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -116,19 +97,14 @@ class DirInfo(object):
 
     """
 
-    def __init__(
-        self, contents=None, thumbnail_absolute_path=None, theme_color=None,
-    ):
+
+    def __init__(self, contents=None, thumbnail_absolute_path=None, theme_color=None,):
         self.contents = contents
         self.thumbnail_absolute_path = thumbnail_absolute_path
         self.theme_color = theme_color
 
     def read(self, iprot):
-        if (
-            iprot._fast_decode is not None
-            and isinstance(iprot.trans, TTransport.CReadableTransport)
-            and self.thrift_spec is not None
-        ):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -149,20 +125,12 @@ class DirInfo(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.thumbnail_absolute_path = (
-                        iprot.readString().decode("utf-8")
-                        if sys.version_info[0] == 2
-                        else iprot.readString()
-                    )
+                    self.thumbnail_absolute_path = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.theme_color = (
-                        iprot.readString().decode("utf-8")
-                        if sys.version_info[0] == 2
-                        else iprot.readString()
-                    )
+                    self.theme_color = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             else:
@@ -172,45 +140,36 @@ class DirInfo(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(
-                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
-            )
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin("DirInfo")
+        oprot.writeStructBegin('DirInfo')
         if self.contents is not None:
-            oprot.writeFieldBegin("contents", TType.LIST, 1)
+            oprot.writeFieldBegin('contents', TType.LIST, 1)
             oprot.writeListBegin(TType.STRUCT, len(self.contents))
             for iter6 in self.contents:
                 iter6.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.thumbnail_absolute_path is not None:
-            oprot.writeFieldBegin("thumbnail_absolute_path", TType.STRING, 2)
-            oprot.writeString(
-                self.thumbnail_absolute_path.encode("utf-8")
-                if sys.version_info[0] == 2
-                else self.thumbnail_absolute_path
-            )
+            oprot.writeFieldBegin('thumbnail_absolute_path', TType.STRING, 2)
+            oprot.writeString(self.thumbnail_absolute_path.encode('utf-8') if sys.version_info[0] == 2 else self.thumbnail_absolute_path)
             oprot.writeFieldEnd()
         if self.theme_color is not None:
-            oprot.writeFieldBegin("theme_color", TType.STRING, 3)
-            oprot.writeString(
-                self.theme_color.encode("utf-8")
-                if sys.version_info[0] == 2
-                else self.theme_color
-            )
+            oprot.writeFieldBegin('theme_color', TType.STRING, 3)
+            oprot.writeString(self.theme_color.encode('utf-8') if sys.version_info[0] == 2 else self.theme_color)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
     def validate(self):
         if self.contents is None:
-            raise TProtocolException(message="Required field contents is unset!")
+            raise TProtocolException(message='Required field contents is unset!')
         return
 
     def __repr__(self):
-        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
-        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -226,17 +185,12 @@ class ItemThumbnail(object):
 
     """
 
-    def __init__(
-        self, thumbnail_absolute_path=None,
-    ):
+
+    def __init__(self, thumbnail_absolute_path=None,):
         self.thumbnail_absolute_path = thumbnail_absolute_path
 
     def read(self, iprot):
-        if (
-            iprot._fast_decode is not None
-            and isinstance(iprot.trans, TTransport.CReadableTransport)
-            and self.thrift_spec is not None
-        ):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -246,11 +200,7 @@ class ItemThumbnail(object):
                 break
             if fid == 1:
                 if ftype == TType.STRING:
-                    self.thumbnail_absolute_path = (
-                        iprot.readString().decode("utf-8")
-                        if sys.version_info[0] == 2
-                        else iprot.readString()
-                    )
+                    self.thumbnail_absolute_path = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             else:
@@ -260,18 +210,12 @@ class ItemThumbnail(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(
-                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
-            )
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin("ItemThumbnail")
+        oprot.writeStructBegin('ItemThumbnail')
         if self.thumbnail_absolute_path is not None:
-            oprot.writeFieldBegin("thumbnail_absolute_path", TType.STRING, 1)
-            oprot.writeString(
-                self.thumbnail_absolute_path.encode("utf-8")
-                if sys.version_info[0] == 2
-                else self.thumbnail_absolute_path
-            )
+            oprot.writeFieldBegin('thumbnail_absolute_path', TType.STRING, 1)
+            oprot.writeString(self.thumbnail_absolute_path.encode('utf-8') if sys.version_info[0] == 2 else self.thumbnail_absolute_path)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -280,33 +224,32 @@ class ItemThumbnail(object):
         return
 
     def __repr__(self):
-        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
-        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
-
-
 all_structs.append(Item)
 Item.thrift_spec = (
     None,  # 0
-    (1, TType.BOOL, "is_file", None, None,),  # 1
-    (2, TType.STRING, "name", "UTF8", None,),  # 2
+    (1, TType.BOOL, 'is_file', None, None, ),  # 1
+    (2, TType.STRING, 'name', 'UTF8', None, ),  # 2
 )
 all_structs.append(DirInfo)
 DirInfo.thrift_spec = (
     None,  # 0
-    (1, TType.LIST, "contents", (TType.STRUCT, [Item, None], False), None,),  # 1
-    (2, TType.STRING, "thumbnail_absolute_path", "UTF8", None,),  # 2
-    (3, TType.STRING, "theme_color", "UTF8", None,),  # 3
+    (1, TType.LIST, 'contents', (TType.STRUCT, [Item, None], False), None, ),  # 1
+    (2, TType.STRING, 'thumbnail_absolute_path', 'UTF8', None, ),  # 2
+    (3, TType.STRING, 'theme_color', 'UTF8', None, ),  # 3
 )
 all_structs.append(ItemThumbnail)
 ItemThumbnail.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, "thumbnail_absolute_path", "UTF8", None,),  # 1
+    (1, TType.STRING, 'thumbnail_absolute_path', 'UTF8', None, ),  # 1
 )
 fix_spec(all_structs)
 del all_structs

@@ -1,6 +1,6 @@
 from pygen.types.ttypes import Item, DirInfo, ItemThumbnail
 from utils.config import get_config
-from utils.thrift import serialize_json
+from utils.thrift import serialize_bin
 from utils.tools import partition, get_app_abs_path
 import os
 import tornado.web
@@ -55,7 +55,7 @@ class DirHandler(BaseHandler):
       get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
       "",  # TODO: theme_color
     )
-    self.write(serialize_json(dir_info))
+    self.write(serialize_bin(dir_info))
     self.finish()
 
 
@@ -66,7 +66,7 @@ class ThumbnailHandler(BaseHandler):
 
   async def get(self, fpath: str) -> None:
     item_thumbnail = ItemThumbnail('test_thumbnail.jpg')
-    self.write(serialize_json(item_thumbnail))
+    self.write(serialize_bin(item_thumbnail))
     self.finish()
 
 

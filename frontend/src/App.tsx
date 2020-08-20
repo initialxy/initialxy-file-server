@@ -8,7 +8,8 @@ export default defineComponent({
     const res = ref("");
 
     onMounted(async () => {
-      res.value = await genDirInfo("");
+      const dirInfo = await genDirInfo("");
+      res.value = dirInfo.thumbnail_absolute_path || "";
     });
 
     const test = (msg: string): void => console.log(msg);
