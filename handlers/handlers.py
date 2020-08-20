@@ -18,7 +18,7 @@ class BaseHandler(tornado.web.RequestHandler):
     if CONFIG.is_debug:
       self.set_header("Access-Control-Allow-Origin", "*")
       self.set_header("Access-Control-Allow-Headers", "x-requested-with")
-      self.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+      self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
 
 
 class DirHandler(BaseHandler):
