@@ -5,8 +5,6 @@ import sys
 import tornado.ioloop
 import tornado.web
 
-is_debug = "--debug" in sys.argv
-
 CONFIG = get_config()
 
 
@@ -25,7 +23,7 @@ def make_app() -> tornado.web.Application:
         },
       ),
     ],
-    debug=is_debug
+    debug=CONFIG.is_debug
   )
 
 

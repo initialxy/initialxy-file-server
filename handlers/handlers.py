@@ -10,7 +10,18 @@ INDEX_FILE = "frontend/dist/index.html"
 DIR_THUMBNAIL_FILE = "thumbnail.jpg"
 THUMBNAILS_DIR = "__thumbnails"
 
-class DirHandler(tornado.web.RequestHandler):
+
+class BaseHandler(tornado.web.RequestHandler):
+
+  def set_default_headers(self) -> None:
+    self.set_header("Content-Type", "application/json")
+    if CONFIG.is_debug:
+      self.set_header("Access-Control-Allow-Origin", "*")
+      self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+      self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+
+
+class DirHandler(BaseHandler):
   """
   Restful API endpoint to query directory information.
   """
@@ -42,21 +53,19 @@ class DirHandler(tornado.web.RequestHandler):
     dir_info = DirInfo(
       visible_items,
       get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
-      "", # TODO: theme_color
+      "",  # TODO: theme_color
     )
-    self.set_header("Content-Type", "application/json")
     self.write(serialize_json(dir_info))
     self.finish()
 
 
-class ThumbnailHandler(tornado.web.RequestHandler):
+class ThumbnailHandler(BaseHandler):
   """
   Restful API endpoint to query thumbnail. Try to generate if missing.
   """
 
   async def get(self, fpath: str) -> None:
     item_thumbnail = ItemThumbnail('test_thumbnail.jpg')
-    self.set_header("Content-Type", "application/json")
     self.write(serialize_json(item_thumbnail))
     self.finish()
 
