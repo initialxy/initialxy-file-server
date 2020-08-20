@@ -1,8 +1,8 @@
-from pygen.types.ttypes import Item, DirInfo, ItemThumbnail
 from utils.config import get_config
 from utils.thrift import serialize_bin
 from utils.tools import partition, get_app_abs_path
 import os
+import pygen
 import tornado.web
 
 CONFIG = get_config()
@@ -32,7 +32,7 @@ class DirHandler(BaseHandler):
       raise tornado.web.HTTPError(404)
 
     items = [
-      Item(os.path.isfile(os.path.join(abs_path, i)), i)
+      pygen.types.Item(os.path.isfile(os.path.join(abs_path, i)), i)
       for i in os.listdir(abs_path)
     ]
     hidden_items, visible_items = partition(
@@ -50,7 +50,7 @@ class DirHandler(BaseHandler):
     if thumbnail_file:
       thumbnail_abs_path = os.path.join(abs_path, thumbnail_file.name)
 
-    dir_info = DirInfo(
+    dir_info = pygen.types.DirInfo(
       visible_items,
       get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
       "",  # TODO: theme_color
@@ -65,7 +65,7 @@ class ThumbnailHandler(BaseHandler):
   """
 
   async def get(self, fpath: str) -> None:
-    item_thumbnail = ItemThumbnail('test_thumbnail.jpg')
+    item_thumbnail = pygen.types.ItemThumbnail('test_thumbnail.jpg')
     self.write(serialize_bin(item_thumbnail))
     self.finish()
 

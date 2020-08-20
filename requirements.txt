@@ -19,7 +19,6 @@ pyflakes==2.2.0
 pylint==2.5.3
 regex==2020.7.14
 six==1.15.0
-thrift==0.13.0
 thrift-pyi==0.1.0
 thriftpy2==0.4.11
 toml==0.10.1

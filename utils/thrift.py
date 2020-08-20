@@ -1,9 +1,9 @@
-from thrift.protocol.TBinaryProtocol import TBinaryProtocolFactory
-from thrift.TSerialization import serialize
+from thriftpy2.protocol import TBinaryProtocolFactory
+from thriftpy2.utils import serialize
 
 
 def serialize_bin(thrift_obj: object) -> bytes:
-  return serialize(
+  return bytes(serialize(
     thrift_obj,
-    protocol_factory=TBinaryProtocolFactory(),
-  )
+    proto_factory=TBinaryProtocolFactory(),
+  ))
