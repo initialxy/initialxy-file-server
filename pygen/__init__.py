@@ -9,10 +9,9 @@ _interfaces: Dict[str, ModuleType] = {}
 
 
 def __getattr__(name):
-  try:
-    return _interfaces[name]
-  except KeyError:
-    interface = thriftpy2.load(
-      str(_interfaces_path.joinpath(f"{name}.thrift")))
-    _interfaces[name] = interface
-    return interface
+    try:
+        return _interfaces[name]
+    except KeyError:
+        interface = thriftpy2.load(str(_interfaces_path.joinpath(f"{name}.thrift")))
+        _interfaces[name] = interface
+        return interface
