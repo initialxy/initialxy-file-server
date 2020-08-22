@@ -1,6 +1,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import { genDirInfo } from "./utils/API"
 import HelloWorld from "./components/HelloWorld";
+import store from './store';
 
 export default defineComponent({
   name: 'App',
@@ -8,11 +9,12 @@ export default defineComponent({
     const res = ref("");
 
     onMounted(async () => {
-      const dirInfo = await genDirInfo("");
-      res.value = dirInfo.thumbnail_absolute_path || "";
+      store.dispatch("initRootDir");
     });
 
     const test = (msg: string): void => console.log(msg);
-    return () => <HelloWorld msg={res.value} onClick={test}/>;
+    return () => <HelloWorld
+      msg={store.state.curDirInfo?.theme_color || ""} onClick={test}
+    />;
   }
 });
