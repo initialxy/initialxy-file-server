@@ -1,20 +1,20 @@
-import { defineComponent, onMounted, ref } from "vue";
-import { genDirInfo } from "./utils/API"
-import HelloWorld from "./components/HelloWorld";
+import { defineComponent, onMounted } from "vue";
+import Header from "./components/Header";
+import Browser from "./components/Browser";
 import store from './store';
 
 export default defineComponent({
   name: 'App',
   setup() {
-    const res = ref("");
-
     onMounted(async () => {
       store.dispatch("initRootDir");
     });
 
-    const test = (msg: string): void => console.log(msg);
-    return () => <HelloWorld
-      msg={store.state.curDirInfo?.theme_color || ""} onClick={test}
-    />;
+    return () => (
+      <div class="App">
+        <Header />
+        <Browser />
+      </div>
+    );
   }
 });

@@ -1,6 +1,7 @@
 import { Buffer } from 'buffer';
 import { TFramedTransport, TBinaryProtocol, TProtocol } from "thrift";
 import { DirInfo } from "../jsgen/DirInfo";
+import Memoize from "./Memoize";
 
 
 const ROOT = process.env.NODE_ENV === "development"
@@ -16,8 +17,13 @@ function deserializeThrift<T>(
   return thriftClass.read(protocal);
 }
 
-export async function genDirInfo(dir: string): Promise<DirInfo> {
-  const resp = await fetch(ROOT + "d/" + dir);
-  const respArrayBuffer = await resp.arrayBuffer();
-  return deserializeThrift(Buffer.from(respArrayBuffer), DirInfo);
+// In a class, because TypeScript doesn't let you use decorator on functions,
+// but static functions in class is ok.
+export default class API {
+  @Memoize(100)
+  static async genDirInfo(dir: string): Promise<DirInfo> {
+    const resp = await fetch(ROOT + "d" + dir);
+    const respArrayBuffer = await resp.arrayBuffer();
+    return deserializeThrift(Buffer.from(respArrayBuffer), DirInfo);
+  }
 }

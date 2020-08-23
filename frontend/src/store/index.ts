@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import {genDirInfo} from "../utils/API"
+import API from "../utils/API"
 import { DirInfo } from "../jsgen/DirInfo";
 
 export default createStore({
@@ -27,7 +27,7 @@ export default createStore({
       context.dispatch('fetchCurDir');
     },
     async fetchCurDir(context): Promise<void> {
-      const dirInfo = await genDirInfo(context.state.curDir);
+      const dirInfo = await API.genDirInfo(context.state.curDir);
       context.commit("setCurDirInfo", dirInfo);
     }
   },
