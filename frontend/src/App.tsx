@@ -1,7 +1,8 @@
+import "./App.css";
 import { defineComponent, onMounted } from "vue";
-import Header from "./components/Header";
 import Browser from "./components/Browser";
-import store from './store';
+import Header from "./components/Header";
+import store from "./store";
 
 export default defineComponent({
   name: 'App',
@@ -13,7 +14,7 @@ export default defineComponent({
     return () => (
       <div class="App">
         <Header />
-        <Browser />
+        <Browser items={store.getters.curDirInfo?.contents ?? []} />
       </div>
     );
   }

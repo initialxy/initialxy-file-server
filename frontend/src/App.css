@@ -1,0 +1,11 @@
+html, body, #app {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.App {
+  background-color: #f0f0f0;
+  height: 100%;
+  width: 100%;
+}

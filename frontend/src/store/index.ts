@@ -8,6 +8,9 @@ export default createStore({
     curDir: "/",
     curDirInfo: null as DirInfo | null,
   },
+  getters: {
+    curDirInfo: state => state.curDirInfo,
+  },
   mutations: {
     setRootDir(state, rootDir: string): void {
       state.rootDir = rootDir;
