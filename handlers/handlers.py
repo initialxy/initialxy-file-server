@@ -31,19 +31,19 @@ class DirHandler(BaseHandler):
     if not os.path.isdir(abs_path):
       raise tornado.web.HTTPError(404)
 
-    items = [
-      pygen.types.Item(os.path.isfile(os.path.join(abs_path, i)), i)
+    files = [
+      pygen.types.File(os.path.isfile(os.path.join(abs_path, i)), i)
       for i in os.listdir(abs_path)
     ]
-    hidden_items, visible_items = partition(
-      items,
+    hidden_files, visible_files = partition(
+      files,
       lambda i: (
         i.name == DIR_THUMBNAIL_FILE and i.is_file or
         i.name == THUMBNAILS_DIR and not i.is_file
       ),
     )
     thumbnail_file = next(
-      (i for i in hidden_items if i.name == DIR_THUMBNAIL_FILE),
+      (i for i in hidden_files if i.name == DIR_THUMBNAIL_FILE),
       None,
     )
     thumbnail_abs_path = None
@@ -51,7 +51,7 @@ class DirHandler(BaseHandler):
       thumbnail_abs_path = os.path.join(abs_path, thumbnail_file.name)
 
     dir_info = pygen.types.DirInfo(
-      visible_items,
+      visible_files,
       get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
       "#000000",  # TODO: theme_color
     )

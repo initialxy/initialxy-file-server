@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import store from "./store";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   setup() {
     onMounted(async () => {
       store.dispatch("initRootDir");
