@@ -1,15 +1,7 @@
 import { createStore } from "vuex"
-import API from "../utils/API"
+import { API, getCurPath, joinFileURL, popURL } from "../utils/API"
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
-
-function getCurPath(): string {
-  let contextPath = window.location.pathname;
-  if (contextPath.startsWith("/f/")) {
-    contextPath = contextPath.substring(2);
-  }
-  return contextPath;
-}
 
 type HistoryState = {
   rootDir: string;
@@ -31,6 +23,11 @@ export default createStore({
     setCurDirInfo(state, dirInfo: DirInfo): void {
       state.curDirInfo = dirInfo;
     },
+  },
+  getters: {
+    canPopDir(state): boolean {
+      return state.curDir !== "/" && state.curDir !== state.rootDir;
+    }
   },
   actions: {
     initRootDir(context): void {
@@ -54,8 +51,7 @@ export default createStore({
       context.commit("setCurDirInfo", dirInfo);
     },
     selectFile(context, file: File): void {
-      const sep = context.state.curDir.endsWith("/") ? "" : "/";
-      const newContextPath = "/f" + context.state.curDir + sep + file.name;
+      const newContextPath = joinFileURL(context.state.curDir, file);
       if (file.is_file) {
         window.location.href = newContextPath;
         return;
@@ -63,6 +59,15 @@ export default createStore({
       window.history.pushState(
         { rootDir: context.state.rootDir } as HistoryState,
         file.name,
+        newContextPath,
+      );
+      context.dispatch("updateCurDir");
+    },
+    popDir(context): void {
+      const newContextPath = popURL(context.state.curDir);
+      window.history.pushState(
+        { rootDir: context.state.rootDir } as HistoryState,
+        "",
         newContextPath,
       );
       context.dispatch("updateCurDir");

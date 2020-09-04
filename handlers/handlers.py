@@ -50,6 +50,8 @@ class DirHandler(BaseHandler):
     if thumbnail_file:
       thumbnail_abs_path = os.path.join(abs_path, thumbnail_file.name)
 
+    visible_files.sort(key=lambda f: ("f" if f.is_file else "d") +  f.name)
+
     dir_info = pygen.types.DirInfo(
       visible_files,
       get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
