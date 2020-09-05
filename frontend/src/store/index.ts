@@ -1,10 +1,25 @@
 import { createStore } from "vuex"
-import { API, getCurPath, joinFileURL, popURL } from "../utils/API"
+import API from "../utils/API"
+import {
+  getCurPath,
+  joinFileURL,
+  popURL,
+  normalizeURL,
+  getLastDirName
+} from "../utils/URL";
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
 
+const DEFAULT_TITLE = "Files!";
+
 type HistoryState = {
   rootDir: string;
+}
+
+type NavData = {
+  contextPath: string;
+  isFile?: boolean;
+  isForwardNav?: boolean;
 }
 
 export default createStore({
@@ -17,8 +32,23 @@ export default createStore({
     setRootDir(state, rootDir: string): void {
       state.rootDir = rootDir;
     },
-    setCurDir(state, curDir: string): void {
-      state.curDir = curDir;
+    setCurDir(state, payload: NavData): void {
+      state.curDir = payload.contextPath;
+      const newURL = normalizeURL(payload.contextPath, payload.isFile);
+      const lastDirName = getLastDirName(payload.contextPath) || DEFAULT_TITLE;
+      document.title = lastDirName;
+      if (payload.isFile === true) {
+        window.location.href = newURL;
+        return;
+      }
+
+      if (payload.isForwardNav === true) {
+        window.history.pushState(
+          { rootDir: state.rootDir } as HistoryState,
+          lastDirName,
+          newURL,
+        );
+      }
     },
     setCurDirInfo(state, dirInfo: DirInfo): void {
       state.curDirInfo = dirInfo;
@@ -32,18 +62,18 @@ export default createStore({
   actions: {
     initRootDir(context): void {
       const historyState = window.history.state as HistoryState | undefined;
-      context.commit(
-        "setRootDir",
-        historyState != null ? historyState.rootDir : getCurPath(),
-      );
-      context.dispatch("updateCurDir");
+      context.commit("setRootDir", historyState?.rootDir ?? getCurPath());
+      context.dispatch("updateDir", { contextPath: getCurPath() } as NavData);
 
       window.addEventListener("popstate", (_: Event) => {
-        context.dispatch("updateCurDir");
+        context.dispatch(
+          "updateDir",
+          { contextPath: getCurPath() } as NavData,
+        );
       });
     },
-    updateCurDir(context): void {
-      context.commit("setCurDir", getCurPath());
+    updateDir(context, payload: NavData): void {
+      context.commit("setCurDir", payload);
       context.dispatch("fetchCurDir");
     },
     async fetchCurDir(context): Promise<void> {
@@ -52,25 +82,21 @@ export default createStore({
     },
     selectFile(context, file: File): void {
       const newContextPath = joinFileURL(context.state.curDir, file);
-      if (file.is_file) {
-        window.location.href = newContextPath;
-        return;
-      }
-      window.history.pushState(
-        { rootDir: context.state.rootDir } as HistoryState,
-        file.name,
-        newContextPath,
+      context.dispatch(
+        "updateDir",
+        {
+          contextPath: newContextPath,
+          isFile: file.is_file,
+          isForwardNav: true,
+        } as NavData,
       );
-      context.dispatch("updateCurDir");
     },
     popDir(context): void {
       const newContextPath = popURL(context.state.curDir);
-      window.history.pushState(
-        { rootDir: context.state.rootDir } as HistoryState,
-        "",
-        newContextPath,
+      context.dispatch(
+        "updateDir",
+        { contextPath: newContextPath, isForwardNav: true } as NavData,
       );
-      context.dispatch("updateCurDir");
     }
   },
   modules: {
