@@ -6,7 +6,6 @@ struct File {
 struct DirInfo {
   1: required list<File> contents,
   2: optional string thumbnail_absolute_path,
-  3: optional string theme_color,
 }
 
 struct ItemThumbnail {

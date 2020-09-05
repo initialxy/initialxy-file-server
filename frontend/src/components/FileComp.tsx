@@ -1,10 +1,6 @@
 import { defineComponent, PropType } from "vue";
 import { File } from "../jsgen/File"
-
-function getFriendlyName(name: string): string {
-  name = name.replace(/\.\w+$/, "").replace(/_/g, " ");
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
+import {getFriendlyFileName} from "../utils/URL";
 
 export default defineComponent({
   name: "FileComp",
@@ -19,7 +15,7 @@ export default defineComponent({
 
     return () => (
       <div class="ItemComp" onClick={onClick}>
-        {getFriendlyName(props.file.name) + (props.file.is_file ? "" : "/")}
+        {getFriendlyFileName(props.file.name) + (props.file.is_file ? "" : "/")}
       </div>
     );
   }

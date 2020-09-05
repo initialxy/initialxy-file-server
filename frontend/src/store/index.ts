@@ -5,7 +5,8 @@ import {
   joinFileURL,
   popURL,
   normalizeURL,
-  getLastDirName
+  getLastDirName,
+  getFriendlyFileName
 } from "../utils/URL";
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
@@ -35,12 +36,13 @@ export default createStore({
     setCurDir(state, payload: NavData): void {
       state.curDir = payload.contextPath;
       const newURL = normalizeURL(payload.contextPath, payload.isFile);
-      const lastDirName = getLastDirName(payload.contextPath) || DEFAULT_TITLE;
-      document.title = lastDirName;
       if (payload.isFile === true) {
         window.location.href = newURL;
         return;
       }
+
+      const lastDirName = getLastDirName(payload.contextPath) || DEFAULT_TITLE;
+      document.title = getFriendlyFileName(lastDirName);
 
       if (payload.isForwardNav === true) {
         window.history.pushState(

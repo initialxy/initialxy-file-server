@@ -55,7 +55,6 @@ class DirHandler(BaseHandler):
     dir_info = pygen.types.DirInfo(
       visible_files,
       get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
-      "#000000",  # TODO: theme_color
     )
     self.write(serialize_bin(dir_info))
     self.finish()
