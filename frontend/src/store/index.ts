@@ -11,8 +11,6 @@ import {
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
 
-const DEFAULT_TITLE = "Files!";
-
 type HistoryState = {
   rootDir: string;
 }
@@ -28,6 +26,7 @@ export default createStore({
     rootDir: "/",
     curDir: "/",
     curDirInfo: null as DirInfo | null,
+    title: "",
   },
   mutations: {
     setRootDir(state, rootDir: string): void {
@@ -41,8 +40,10 @@ export default createStore({
         return;
       }
 
-      const lastDirName = getLastDirName(payload.contextPath) || DEFAULT_TITLE;
-      document.title = getFriendlyFileName(lastDirName);
+      const lastDirName = getLastDirName(payload.contextPath);
+      const title = getFriendlyFileName(lastDirName);
+      document.title = title;
+      state.title = title;
 
       if (payload.isForwardNav === true) {
         window.history.pushState(

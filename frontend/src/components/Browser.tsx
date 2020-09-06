@@ -1,3 +1,4 @@
+import "./Browser.css";
 import { defineComponent, PropType } from "vue";
 import { File } from "../jsgen/File"
 import ItemComp from "./FileComp";

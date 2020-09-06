@@ -14,6 +14,7 @@ IS_DEBUG = "--debug" in sys.argv
 @dataclass
 class Config:
   root_dir: str
+  port: int
   is_debug: bool
 
 
@@ -33,4 +34,8 @@ def get_config() -> Config:
   f.close()
   config_dict = json.loads(contents)
 
-  return Config(config_dict["root_dir"], IS_DEBUG)
+  return Config(
+    config_dict["root_dir"],
+    config_dict.get("port", 8000),
+    IS_DEBUG,
+  )

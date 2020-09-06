@@ -29,5 +29,5 @@ def make_app() -> tornado.web.Application:
 
 if __name__ == "__main__":
   app = make_app()
-  app.listen(8000)
+  app.listen(CONFIG.port)
   tornado.ioloop.IOLoop.current().start()

@@ -8,9 +8,20 @@ html, body, #app {
   background-color: #e7e7e7;
   min-height: 100%;
   width: 100%;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 300;
 }
 
-.App .UpButton {
-  position: absolute;
-  margin-top: -10px;
+.App > .up_button {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+}
+
+.App > .browser {
+  padding-bottom: 3em;
+}
+
+.App > .header {
+  z-index: 2;
 }

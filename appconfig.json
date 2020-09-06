@@ -1,3 +1,4 @@
 {
-  "root_dir": "/home/initialxy/blender"
+  "root_dir": "/home/initialxy/blender",
+  "port": 8000
 }

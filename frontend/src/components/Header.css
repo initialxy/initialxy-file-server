@@ -1,4 +1,16 @@
 .Header {
   height: 3em;
-  background: #ffdcdc;
+  background: #01a4eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-left: 1em;
+  box-shadow: 0 0 0.5em #0045637f;
+}
+
+.Header h1 {
+  font-size: 1.3em;
+  padding: 0;
+  font-weight: 300;
+  text-transform: uppercase;
 }
