@@ -1,6 +1,7 @@
+import "./FileComp.css";
 import { defineComponent, PropType } from "vue";
-import { File } from "../jsgen/File"
-import {getFriendlyFileName} from "../utils/URL";
+import { File } from "../jsgen/File";
+import { getFriendlyFileName } from "../utils/URL";
 
 export default defineComponent({
   name: "FileComp",
@@ -14,8 +15,9 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="ItemComp" onClick={onClick}>
-        {getFriendlyFileName(props.file.name) + (props.file.is_file ? "" : "/")}
+      <div class="FileComp" onClick={onClick}>
+        <div class="thumbnail"><div class="icon fas fa-file" /></div>
+        <div class="file_name">{getFriendlyFileName(props.file.name)}</div>
       </div>
     );
   }

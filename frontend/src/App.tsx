@@ -20,6 +20,8 @@ export default defineComponent({
         <Header class="header" title={store.state.title} />
         <Browser
           class="browser"
+          key={store.state.curDir}
+          baseDir={store.state.curDir}
           items={store.state.curDirInfo?.contents ?? []}
           onSelect={(file: File) => store.dispatch("selectFile", file)}
         />
