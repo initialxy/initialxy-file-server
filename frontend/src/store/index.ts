@@ -77,7 +77,9 @@ export default createStore({
     },
     updateDir(context, payload: NavData): void {
       context.commit("setCurDir", payload);
-      context.dispatch("fetchCurDir");
+      if (payload.isFile == null || !payload.isFile) {
+        context.dispatch("fetchCurDir");
+      }
     },
     async fetchCurDir(context): Promise<void> {
       const dirInfo = await API.genDirInfo(context.state.curDir);
