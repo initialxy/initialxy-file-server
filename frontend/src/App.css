@@ -1,6 +1,5 @@
 html, body, #app {
   background-color: #e7e7e7;
-  height: 100%;
   margin: 0;
   width: 100%;
 }
@@ -8,18 +7,14 @@ html, body, #app {
 .App {
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-weight: 300;
-  min-height: 100%;
   width: 100%;
+  padding-bottom: 5em;
 }
 
 .App > .up_button {
   bottom: 2em;
   position: fixed;
   right: 2em;
-}
-
-.App > .browser {
-  padding-bottom: 3em;
 }
 
 .App > .header {

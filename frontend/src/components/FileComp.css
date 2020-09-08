@@ -1,12 +1,9 @@
 .FileComp {
   background-color: white;
-  width: 8em;
-  margin: 1em;
   border-radius: 1em;
   box-shadow: 0.1em 0.1em 0.5em #00000032;
   overflow: hidden;
   box-sizing: border-box;
-  border: 0.5em solid white;
 }
 
 .FileComp > .thumbnail {
@@ -26,8 +23,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  direction: rtl;
   text-align: left;
-  padding: 1em 0 0.5em 0;
+  padding: 1em;
   color: #323232;
 }

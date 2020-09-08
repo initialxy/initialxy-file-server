@@ -1,5 +1,12 @@
 .Browser {
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
+}
+
+.Browser > .child {
+  float: left;
+  margin: 1em 0 0 1em;
+}
+
+.Browser > .clearfix {
+  clear: both;
 }
