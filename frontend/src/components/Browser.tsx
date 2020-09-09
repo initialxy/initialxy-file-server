@@ -3,6 +3,7 @@ import { defineComponent, PropType, onMounted, onUnmounted, ref } from "vue";
 import { File } from "../jsgen/File";
 import { joinFileURL } from "../utils/URL";
 import ItemComp from "./FileComp";
+import store from "../store";
 
 const MIN_CHILD_WIDTH_EM = 8;
 const CHILD_MARGIN_EM = 2;
@@ -10,7 +11,6 @@ const CHILD_MARGIN_EM = 2;
 export default defineComponent({
   name: "Browser",
   props: {
-    items: { type: Array as PropType<File[]>, required: true },
     baseDir: { type: String, required: true },
     onSelect: Function as PropType<(file: File) => void>,
   },
@@ -40,13 +40,16 @@ export default defineComponent({
 
     return () => {
       const sizePx = `${childSize.value}px`;
+      const files = store.state.curDirInfo?.contents ?? [];
+      const thumbnails = store.state.thumbnails;
       return (
         <div class="Browser">
-          {childSize.value > 0 ? Array.from(props.items).map(i => (
+          {childSize.value > 0 ? Array.from(files).map(i => (
             <ItemComp
               class="child"
               key={joinFileURL(props.baseDir, i)}
               file={i}
+              thumbnail={thumbnails.get(joinFileURL(props.baseDir, i))}
               onSelect={props.onSelect}
               style={{height: sizePx, width: sizePx}}
             />

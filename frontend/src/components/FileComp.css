@@ -39,19 +39,30 @@
   transform: translate(0.2em, 0.2em);
 }
 
-.FileComp > .inner > .thumbnail {
+.FileComp > .inner > .thumbnail_container {
   align-items: center;
   background: linear-gradient(160deg, rgba(80,190,189,1) 0%, rgba(52,126,158,1) 100%);
   display: flex;
   flex-basis: 0;
   flex-grow: 1;
   height: 8em;
+  position: relative;
 }
 
-.FileComp > .inner > .thumbnail > .icon {
+.FileComp > .inner > .thumbnail_container > .icon {
   color: white;
   font-size: 3em;
   margin: auto;
+}
+
+.FileComp > .inner > .thumbnail_container > .thumbnail {
+  background-size: cover;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .FileComp > .inner > .file_name {

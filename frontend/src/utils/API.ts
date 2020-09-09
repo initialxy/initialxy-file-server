@@ -1,6 +1,7 @@
 import { Buffer } from "buffer";
 import { DirInfo } from "../jsgen/DirInfo";
-import { getDirEndpoint } from "./URL";
+import { Thumbnail } from "../jsgen/Thumbnail";
+import { getDirEndpoint, getThumbnailEndpoint } from "./URL";
 import { TFramedTransport, TBinaryProtocol, TProtocol } from "thrift";
 import Memoize from "./Memoize";
 
@@ -21,5 +22,12 @@ export default class API {
     const resp = await fetch(getDirEndpoint(dir));
     const respArrayBuffer = await resp.arrayBuffer();
     return deserializeThrift(Buffer.from(respArrayBuffer), DirInfo);
+  }
+
+  @Memoize(500)
+  static async genThumbnail(filePath: string): Promise<Thumbnail> {
+    const resp = await fetch(getThumbnailEndpoint(filePath));
+    const respArrayBuffer = await resp.arrayBuffer();
+    return deserializeThrift(Buffer.from(respArrayBuffer), Thumbnail);
   }
 }

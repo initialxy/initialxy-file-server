@@ -1,9 +1,10 @@
 from utils.config import get_config
 from utils.thrift import serialize_bin
-from utils.tools import partition, get_app_abs_path
+from utils.tools import get_app_abs_path
 import os
 import pygen
 import tornado.web
+import re
 
 CONFIG = get_config()
 INDEX_FILE = "../frontend/dist/index.html"
@@ -35,27 +36,15 @@ class DirHandler(BaseHandler):
       pygen.types.File(os.path.isfile(os.path.join(abs_path, i)), i)
       for i in os.listdir(abs_path)
     ]
-    hidden_files, visible_files = partition(
-      files,
-      lambda i: (
-        i.name == DIR_THUMBNAIL_FILE and i.is_file or
-        i.name == THUMBNAILS_DIR and not i.is_file
-      ),
-    )
-    thumbnail_file = next(
-      (i for i in hidden_files if i.name == DIR_THUMBNAIL_FILE),
-      None,
-    )
-    thumbnail_abs_path = None
-    if thumbnail_file:
-      thumbnail_abs_path = os.path.join(abs_path, thumbnail_file.name)
+    visible_files = [
+      f
+      for f in files
+      if (f.name != DIR_THUMBNAIL_FILE or not f.is_file) and
+        (f.name != THUMBNAILS_DIR or f.is_file)
+    ]
+    visible_files.sort(key=lambda f: ("f" if f.is_file else "d") + f.name)
 
-    visible_files.sort(key=lambda f: ("f" if f.is_file else "d") +  f.name)
-
-    dir_info = pygen.types.DirInfo(
-      visible_files,
-      get_app_abs_path(thumbnail_abs_path) if thumbnail_abs_path else None,
-    )
+    dir_info = pygen.types.DirInfo(visible_files)
     self.write(serialize_bin(dir_info))
     self.finish()
 
@@ -66,7 +55,21 @@ class ThumbnailHandler(BaseHandler):
   """
 
   async def get(self, fpath: str) -> None:
-    item_thumbnail = pygen.types.ItemThumbnail('test_thumbnail.jpg')
+    abs_path = os.path.abspath(os.path.join(CONFIG.root_dir, fpath))
+    thumbnail_file_path = os.path.join(abs_path, DIR_THUMBNAIL_FILE)
+    if os.path.isfile(abs_path):
+      dirname, basename = os.path.split(abs_path)
+      thumbnail_file_name = re.sub(r"\.\w+$", ".jpg", basename)
+      thumbnail_file_path = os.path.join(
+        dirname,
+        THUMBNAILS_DIR,
+        thumbnail_file_name,
+      )
+
+    item_thumbnail = pygen.types.Thumbnail(
+      "/" + os.path.relpath(thumbnail_file_path, CONFIG.root_dir)
+      if os.path.exists(thumbnail_file_path) else None,
+    )
     self.write(serialize_bin(item_thumbnail))
     self.finish()
 

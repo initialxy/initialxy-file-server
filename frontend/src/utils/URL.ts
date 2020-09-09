@@ -8,6 +8,10 @@ export function getDirEndpoint(contextPath: string): string {
   return ROOT + "d" + contextPath;
 }
 
+export function getThumbnailEndpoint(contextPath: string): string {
+  return ROOT + "t" + contextPath;
+}
+
 export function normalizeURL(contextPath: string, isFile = false): string {
   return (isFile ? ROOT : "/") + "f" +
     (contextPath !== "" ? contextPath : "/");

@@ -1,1 +1,1 @@
-export function emptyFunc() {}
+export function emptyFunc(): void {}

@@ -1,6 +1,6 @@
 import "./App.css";
-import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@fortawesome/fontawesome-free/css/all.css";
+import "roboto-fontface/css/roboto/roboto-fontface.css";
 import { defineComponent, onMounted } from "vue";
 import { File } from "./jsgen/File"
 import AppButton from "./components/AppButton";
@@ -21,7 +21,6 @@ export default defineComponent({
         <Browser
           key={store.state.curDir}
           baseDir={store.state.curDir}
-          items={store.state.curDirInfo?.contents ?? []}
           onSelect={(file: File) => store.dispatch("selectFile", file)}
         />
         {

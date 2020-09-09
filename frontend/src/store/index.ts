@@ -21,31 +21,34 @@ type NavData = {
   isForwardNav?: boolean;
 }
 
+type ThumbnailPair = [string, string | null];
+
 export default createStore({
   state: {
     rootDir: "/",
     curDir: "/",
     curDirInfo: null as DirInfo | null,
     title: "",
+    thumbnails: new Map<string, string | null>(),
   },
   mutations: {
     setRootDir(state, rootDir: string): void {
       state.rootDir = rootDir;
     },
-    setCurDir(state, payload: NavData): void {
-      state.curDir = payload.contextPath;
-      const newURL = normalizeURL(payload.contextPath, payload.isFile);
-      if (payload.isFile === true) {
+    setCurDir(state, navData: NavData): void {
+      state.curDir = navData.contextPath;
+      const newURL = normalizeURL(navData.contextPath, navData.isFile);
+      if (navData.isFile === true) {
         window.location.href = newURL;
         return;
       }
 
-      const lastDirName = getLastDirName(payload.contextPath);
+      const lastDirName = getLastDirName(navData.contextPath);
       const title = getFriendlyFileName(lastDirName);
       document.title = title;
       state.title = title;
 
-      if (payload.isForwardNav === true) {
+      if (navData.isForwardNav === true) {
         window.history.pushState(
           { rootDir: state.rootDir } as HistoryState,
           lastDirName,
@@ -55,6 +58,14 @@ export default createStore({
     },
     setCurDirInfo(state, dirInfo: DirInfo): void {
       state.curDirInfo = dirInfo;
+    },
+    addThumbnails(state, thumbnailPairs: ThumbnailPair[]): void {
+      for (const pair of thumbnailPairs) {
+        state.thumbnails.set(
+          pair[0],
+          pair[1],
+        );
+      }
     },
   },
   getters: {
@@ -75,15 +86,16 @@ export default createStore({
         );
       });
     },
-    updateDir(context, payload: NavData): void {
-      context.commit("setCurDir", payload);
-      if (payload.isFile == null || !payload.isFile) {
+    updateDir(context, navData: NavData): void {
+      context.commit("setCurDir", navData);
+      if (navData.isFile == null || !navData.isFile) {
         context.dispatch("fetchCurDir");
       }
     },
     async fetchCurDir(context): Promise<void> {
       const dirInfo = await API.genDirInfo(context.state.curDir);
       context.commit("setCurDirInfo", dirInfo);
+      context.dispatch("fetchThumbnails", dirInfo.contents);
     },
     selectFile(context, file: File): void {
       const newContextPath = joinFileURL(context.state.curDir, file);
@@ -102,7 +114,18 @@ export default createStore({
         "updateDir",
         { contextPath: newContextPath, isForwardNav: true } as NavData,
       );
-    }
+    },
+    async fetchThumbnails(context, files: File[]): Promise<void> {
+      const contextPaths = files
+        .map(f => joinFileURL(context.state.curDir, f))
+        .filter(p => !context.state.thumbnails.has(p));
+      const thumbnails = await Promise.all(contextPaths.map(async p => {
+        const thumbnail = await API.genThumbnail(p);
+        return [p, thumbnail.thumbnail_absolute_path ?? null] as ThumbnailPair;
+      }));
+
+      context.commit("addThumbnails", thumbnails);
+    },
   },
   modules: {
   }
