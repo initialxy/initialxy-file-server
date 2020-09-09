@@ -36,13 +36,13 @@ export default createStore({
       state.rootDir = rootDir;
     },
     setCurDir(state, navData: NavData): void {
-      state.curDir = navData.contextPath;
       const newURL = normalizeURL(navData.contextPath, navData.isFile);
       if (navData.isFile === true) {
         window.location.href = newURL;
         return;
       }
 
+      state.curDir = navData.contextPath;
       const lastDirName = getLastDirName(navData.contextPath);
       const title = getFriendlyFileName(lastDirName);
       document.title = title;
