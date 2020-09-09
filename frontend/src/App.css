@@ -1,11 +1,11 @@
 html, body, #app {
-  background-color: white;
+  background-color: #e3f6ff;
   margin: 0;
   width: 100%;
 }
 
 .App {
-  background: linear-gradient(30deg, rgba(255,255,255,1) 85%, rgba(209,184,255,1) 100%) no-repeat;
+  background: linear-gradient(30deg, rgba(227, 246, 255,1) 85%, rgba(209,184,255,1) 100%) no-repeat;
   background-size: 100% 20em;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-weight: 300;
@@ -17,8 +17,9 @@ html, body, #app {
   bottom: 2em;
   position: fixed;
   right: 2em;
+  z-index: 9;
 }
 
 .App > .header {
-  z-index: 2;
+  z-index: 9;
 }

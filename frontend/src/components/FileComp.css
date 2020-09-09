@@ -1,23 +1,44 @@
 .FileComp {
-  background-color: white;
-  border-radius: 0.5em;
-  border-width: 1px;
-  border-style: solid;
-  border-color: white #d2d2d2 #d2d2d2 white;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   min-height: 5em;
   min-width: 5em;
+  position: relative;
+}
+
+.FileComp:after, .FileComp:before {
+  border-radius: 0.5em;
+  content: "";
+  height: 90%;
+  position: absolute;
+  width: 90%;
+  z-index: 0;
+}
+
+.FileComp:after {
+  box-shadow: 0 0 2em #568499;
+  transform: translate(10%, 10%);
+}
+
+.FileComp:before {
+  box-shadow: 0 0 1em white;
+}
+
+.FileComp > .inner {
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
-  transition: transform 0.05s ease-out;
+  position: absolute;
+  transition: transform 0.1s ease-out;
+  width: 100%;
+  z-index: 2;
 }
 
-.FileComp:active {
-  transform: scale(0.97, 0.97) translate(0.1em, 0.1em);
+.FileComp > .inner:active {
+  transform: translate(0.2em, 0.2em);
 }
 
-.FileComp > .thumbnail {
+.FileComp > .inner > .thumbnail {
   align-items: center;
   background: linear-gradient(160deg, rgba(80,190,189,1) 0%, rgba(52,126,158,1) 100%);
   display: flex;
@@ -26,13 +47,15 @@
   height: 8em;
 }
 
-.FileComp > .thumbnail > .icon {
+.FileComp > .inner > .thumbnail > .icon {
   color: white;
   font-size: 3em;
   margin: auto;
 }
 
-.FileComp > .file_name {
+.FileComp > .inner > .file_name {
+  background-color: white;
+  box-sizing: border-box;
   color: #323232;
   flex-grow: 0;
   overflow: hidden;
@@ -43,7 +66,7 @@
 }
 
 @media(hover: hover) {
-  .FileComp:hover {
-    transform: scale(0.97, 0.97) translate(0.1em, 0.1em);
+  .FileComp >.inner:hover {
+    transform: translate(0.2em, 0.2em);
   }
 }
