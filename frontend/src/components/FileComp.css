@@ -14,12 +14,13 @@
 }
 
 .FileComp:after {
-  box-shadow: 0 0 2em #568499;
+  box-shadow: 0 0 1.5em #568499;
   transform: translate(10%, 10%);
 }
 
 .FileComp:before {
-  box-shadow: 0 0 1em white;
+  background-color: #ffffff7f;
+  box-shadow: 0 0 0.5em white;
 }
 
 .FileComp > .inner {
