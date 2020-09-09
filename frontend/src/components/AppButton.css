@@ -28,7 +28,7 @@
   left: -0.2em;
   position: absolute;
   top: -0.2em;
-  transition: top 0.1s ease, left 0.1s ease;
+  transition: top 0.1s ease-out, left 0.1s ease-out;
   width: 5em;
 }
 

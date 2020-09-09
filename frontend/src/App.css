@@ -1,14 +1,16 @@
 html, body, #app {
-  background-color: #e7e7e7;
+  background-color: white;
   margin: 0;
   width: 100%;
 }
 
 .App {
+  background: linear-gradient(30deg, rgba(255,255,255,1) 85%, rgba(209,184,255,1) 100%) no-repeat;
+  background-size: 100% 20em;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-weight: 300;
-  width: 100%;
   padding-bottom: 5em;
+  width: 100%;
 }
 
 .App > .up_button {

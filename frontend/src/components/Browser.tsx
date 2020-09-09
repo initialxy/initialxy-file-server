@@ -5,7 +5,7 @@ import { joinFileURL } from "../utils/URL";
 import ItemComp from "./FileComp";
 
 const MIN_CHILD_WIDTH_EM = 8;
-const CHILD_MARGIN_EM = 1;
+const CHILD_MARGIN_EM = 2;
 
 export default defineComponent({
   name: "Browser",
@@ -38,19 +38,22 @@ export default defineComponent({
       window.removeEventListener("resize", reComputeChildSize);
     });
 
-    return () => (
-      <div class="Browser">
-        {Array.from(props.items).map(i => (
-          <ItemComp
-            class="child"
-            key={joinFileURL(props.baseDir, i)}
-            file={i}
-            onSelect={props.onSelect}
-            size={childSize.value}
-          />
-        ))}
-        <div class="clearfix" />
-      </div>
-    );
+    return () => {
+      const sizePx = `${childSize.value}px`;
+      return (
+        <div class="Browser">
+          {childSize.value > 0 ? Array.from(props.items).map(i => (
+            <ItemComp
+              class="child"
+              key={joinFileURL(props.baseDir, i)}
+              file={i}
+              onSelect={props.onSelect}
+              style={{height: sizePx, width: sizePx}}
+            />
+          )) : null}
+          <div class="clearfix" />
+        </div>
+      );
+    }
   }
 });
