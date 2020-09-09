@@ -1,15 +1,17 @@
 from utils.config import get_config
 from utils.thrift import serialize_bin
 from utils.tools import get_app_abs_path
+from cv2 import cv2
 import os
 import pygen
-import tornado.web
 import re
+import tornado.web
 
 CONFIG = get_config()
 INDEX_FILE = "../frontend/dist/index.html"
 DIR_THUMBNAIL_FILE = "thumbnail.jpg"
 THUMBNAILS_DIR = "__thumbnails"
+VIDEO_EXTENSIONS = {"mp4", "m4v", "webm"}
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -56,7 +58,6 @@ class ThumbnailHandler(BaseHandler):
 
   async def get(self, fpath: str) -> None:
     abs_path = os.path.abspath(os.path.join(CONFIG.root_dir, fpath))
-    thumbnail_file_path = os.path.join(abs_path, DIR_THUMBNAIL_FILE)
     if os.path.isfile(abs_path):
       dirname, basename = os.path.split(abs_path)
       thumbnail_file_name = re.sub(r"\.\w+$", ".jpg", basename)
@@ -66,12 +67,47 @@ class ThumbnailHandler(BaseHandler):
         thumbnail_file_name,
       )
 
+      if (
+        not os.path.exists(thumbnail_file_path) and
+        self.getExtention(abs_path) in VIDEO_EXTENSIONS
+      ):
+        thumbnail_dir = os.path.join(dirname, THUMBNAILS_DIR)
+        if not os.path.exists(thumbnail_dir):
+          os.mkdir(thumbnail_dir)
+        self.create_video_thumbnail(abs_path, thumbnail_file_path)
+    else:
+      thumbnail_file_path = os.path.join(abs_path, DIR_THUMBNAIL_FILE)
+
     item_thumbnail = pygen.types.Thumbnail(
       "/" + os.path.relpath(thumbnail_file_path, CONFIG.root_dir)
       if os.path.exists(thumbnail_file_path) else None,
     )
     self.write(serialize_bin(item_thumbnail))
     self.finish()
+
+  def getExtention(self, abs_path: str) -> str:
+    m = re.match(r".*\.(\w+)$", abs_path)
+    return m.group(1) if m else ""
+
+  def create_video_thumbnail(self, abs_path: str, out_path: str) -> bool:
+    vc = cv2.VideoCapture(abs_path)
+    frame_cnt = int(vc.get(cv2.CAP_PROP_FRAME_COUNT))
+    if not vc.isOpened() or frame_cnt == 0:
+      return False
+    frame_id = (frame_cnt - 1) // 5 # Get a frame from 1 / 5 of the video.
+    vc.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
+    is_successful, frame = vc.read()
+    if not is_successful:
+      return False
+
+    height, width, _ = frame.shape
+    if height > 300:
+      height, width = 300, int(300 / height * width)
+    cv2.resize(frame, (height, width))
+    cv2.imwrite(out_path, frame)
+
+    return True
+
 
 
 class FileHandler(tornado.web.StaticFileHandler):
