@@ -1,20 +1,19 @@
-import "./AppButton.css"
+import "./UpButton.css"
 import { defineComponent, PropType } from "vue";
 import { emptyFunc } from "../utils/Misc";
 
 export default defineComponent({
-  name: 'AppButton',
+  name: 'UpButton',
   props: {
     onClick: Function as PropType<() => void>,
   },
   setup(props) {
     return () => (
       <button
-        class="AppButton"
+        class="UpButton"
         onClick={props.onClick}
         onTouchstart={emptyFunc}
       >
-        <div class="shadow" />
         <div class="face">
           <span class="icon fas fa-angle-up"></span>
         </div>

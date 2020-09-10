@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import { defineComponent, onMounted } from "vue";
 import { File } from "./jsgen/File"
-import AppButton from "./components/AppButton";
+import UpButton from "./components/UpButton";
 import Browser from "./components/Browser";
 import Header from "./components/Header";
 import store from "./store";
@@ -25,7 +25,7 @@ export default defineComponent({
         />
         {
           store.getters.canPopDir
-            ? <AppButton
+            ? <UpButton
               class="up_button"
               onClick={() => store.dispatch("popDir")}
             />
