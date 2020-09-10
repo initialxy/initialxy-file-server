@@ -116,7 +116,7 @@ class ThumbnailHandler(BaseHandler):
     height, width, _ = image.shape
     if height > 300:
       height, width = 300, int(300 / height * width)
-    image = cv2.resize(image, (height, width))
+    image = cv2.resize(image, (width, height))
     cv2.imwrite(out_path, image)
 
 

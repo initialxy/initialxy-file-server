@@ -25,8 +25,8 @@ export default class API {
   }
 
   @Memoize(500)
-  static async genThumbnail(filePath: string): Promise<Thumbnail> {
-    const resp = await fetch(getThumbnailEndpoint(filePath));
+  static async genThumbnail(contextPath: string): Promise<Thumbnail> {
+    const resp = await fetch(getThumbnailEndpoint(contextPath));
     const respArrayBuffer = await resp.arrayBuffer();
     return deserializeThrift(Buffer.from(respArrayBuffer), Thumbnail);
   }

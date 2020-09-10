@@ -10,6 +10,9 @@ import {
 } from "../utils/URL";
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
+import { chunk } from "../utils/Misc";
+
+const MAX_API_BATCH = 5;
 
 type HistoryState = {
   rootDir: string;
@@ -67,6 +70,9 @@ export default createStore({
         );
       }
     },
+    resetThumbnails(state): void {
+      state.thumbnails.clear();
+    },
   },
   getters: {
     canPopDir(state): boolean {
@@ -95,6 +101,10 @@ export default createStore({
     async fetchCurDir(context): Promise<void> {
       const dirInfo = await API.genDirInfo(context.state.curDir);
       context.commit("setCurDirInfo", dirInfo);
+      // Clear the thumbnail map to prevent it from growing indefinitely. API is
+      // always memoized with a LRU cache. We won't usually end up with a
+      // refetch.
+      context.commit("resetThumbnails", dirInfo);
       context.dispatch("fetchThumbnails", dirInfo.contents);
     },
     selectFile(context, file: File): void {
@@ -119,12 +129,13 @@ export default createStore({
       const contextPaths = files
         .map(f => joinFileURL(context.state.curDir, f))
         .filter(p => !context.state.thumbnails.has(p));
-      const thumbnails = await Promise.all(contextPaths.map(async p => {
-        const thumbnail = await API.genThumbnail(p);
-        return [p, thumbnail.thumbnail_absolute_path ?? null] as ThumbnailPair;
-      }));
-
-      context.commit("addThumbnails", thumbnails);
+      for (const c of chunk(contextPaths, MAX_API_BATCH)) {
+        const thumbnails = await Promise.all(c.map(async p => {
+          const thumbnail = await API.genThumbnail(p);
+          return [p, thumbnail.thumbnail_absolute_path ?? null] as ThumbnailPair;
+        }));
+        context.commit("addThumbnails", thumbnails);
+      }
     },
   },
   modules: {
