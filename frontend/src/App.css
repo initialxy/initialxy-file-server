@@ -13,6 +13,10 @@ html, body, #app {
   width: 100%;
 }
 
+.App > .header {
+  z-index: 9;
+}
+
 .App > .up_button {
   bottom: 2em;
   position: fixed;
@@ -20,6 +24,51 @@ html, body, #app {
   z-index: 9;
 }
 
-.App > .header {
-  z-index: 9;
+.App > .up_button.v-enter-active,
+.App > .up_button.v-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.App > .up_button.v-enter-from {
+  transform: translateX(7em);
+}
+
+.App > .up_button.v-enter-to {
+  transform: translateX(0em);
+}
+
+.App > .up_button.v-leave-from {
+  transform: translateX(0em);
+}
+
+.App > .up_button.v-leave-to {
+  transform: translateX(7em);
+}
+
+.App > .browser.v-enter-active,
+.App > .browser.v-leave-active {
+  position: absolute;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.App > .browser.v-enter-from {
+  opacity: 0;
+  transform: translateX(3em);
+  z-index: 1;
+}
+
+.App > .browser.v-enter-to {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 1;
+}
+
+.App > .browser.v-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.App > .browser.v-leave-to {
+  opacity: 0;
+  transform: translateX(-3em);
 }
