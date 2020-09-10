@@ -1,7 +1,8 @@
+from cv2 import cv2
+from numpy import ndarray
 from utils.config import get_config
 from utils.thrift import serialize_bin
 from utils.tools import get_app_abs_path
-from cv2 import cv2
 import os
 import pygen
 import re
@@ -12,6 +13,7 @@ INDEX_FILE = "../frontend/dist/index.html"
 DIR_THUMBNAIL_FILE = "thumbnail.jpg"
 THUMBNAILS_DIR = "__thumbnails"
 VIDEO_EXTENSIONS = {"mp4", "m4v", "webm"}
+IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "tiff"}
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -67,14 +69,18 @@ class ThumbnailHandler(BaseHandler):
         thumbnail_file_name,
       )
 
+      extension = self.get_extention(abs_path)
       if (
         not os.path.exists(thumbnail_file_path) and
-        self.getExtention(abs_path) in VIDEO_EXTENSIONS
+        extension in VIDEO_EXTENSIONS | IMAGE_EXTENSIONS
       ):
         thumbnail_dir = os.path.join(dirname, THUMBNAILS_DIR)
         if not os.path.exists(thumbnail_dir):
           os.mkdir(thumbnail_dir)
-        self.create_video_thumbnail(abs_path, thumbnail_file_path)
+        if extension in VIDEO_EXTENSIONS:
+          self.create_video_thumbnail(abs_path, thumbnail_file_path)
+        else:
+          self.create_image_thumbnail(abs_path, thumbnail_file_path)
     else:
       thumbnail_file_path = os.path.join(abs_path, DIR_THUMBNAIL_FILE)
 
@@ -85,29 +91,33 @@ class ThumbnailHandler(BaseHandler):
     self.write(serialize_bin(item_thumbnail))
     self.finish()
 
-  def getExtention(self, abs_path: str) -> str:
+  def get_extention(self, abs_path: str) -> str:
     m = re.match(r".*\.(\w+)$", abs_path)
-    return m.group(1) if m else ""
+    return (m.group(1) if m else "").lower()
 
   def create_video_thumbnail(self, abs_path: str, out_path: str) -> bool:
     vc = cv2.VideoCapture(abs_path)
     frame_cnt = int(vc.get(cv2.CAP_PROP_FRAME_COUNT))
     if not vc.isOpened() or frame_cnt == 0:
       return False
-    frame_id = (frame_cnt - 1) // 5 # Get a frame from 1 / 5 of the video.
-    vc.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
+    vc.set(cv2.CAP_PROP_POS_FRAMES, (frame_cnt - 1) // 5)
     is_successful, frame = vc.read()
     if not is_successful:
       return False
 
-    height, width, _ = frame.shape
-    if height > 300:
-      height, width = 300, int(300 / height * width)
-    cv2.resize(frame, (height, width))
-    cv2.imwrite(out_path, frame)
-
+    self.resize_and_save_image(frame, out_path)
     return True
 
+  def create_image_thumbnail(self, abs_path: str, out_path: str) -> None:
+    image = cv2.imread(abs_path)
+    self.resize_and_save_image(image, out_path)
+
+  def resize_and_save_image(self, image: ndarray, out_path: str) -> None:
+    height, width, _ = image.shape
+    if height > 300:
+      height, width = 300, int(300 / height * width)
+    image = cv2.resize(image, (height, width))
+    cv2.imwrite(out_path, image)
 
 
 class FileHandler(tornado.web.StaticFileHandler):
