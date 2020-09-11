@@ -26,11 +26,16 @@ type NavData = {
 
 type ThumbnailPair = [string, string | null];
 
+type CurDirInfo = {
+  baseDir: string;
+  dirInfo: DirInfo;
+}
+
 export default createStore({
   state: {
     rootDir: "/",
     curDir: "/",
-    curDirInfo: null as DirInfo | null,
+    curDirInfo: null as CurDirInfo | null,
     title: "",
     thumbnails: new Map<string, string | null>(),
   },
@@ -59,8 +64,8 @@ export default createStore({
         );
       }
     },
-    setCurDirInfo(state, dirInfo: DirInfo): void {
-      state.curDirInfo = dirInfo;
+    setCurDirInfo(state, curDirInfo: CurDirInfo): void {
+      state.curDirInfo = curDirInfo;
     },
     addThumbnails(state, thumbnailPairs: ThumbnailPair[]): void {
       for (const pair of thumbnailPairs) {
@@ -99,8 +104,9 @@ export default createStore({
       }
     },
     async fetchCurDir(context): Promise<void> {
-      const dirInfo = await API.genDirInfo(context.state.curDir);
-      context.commit("setCurDirInfo", dirInfo);
+      const baseDir = context.state.curDir;
+      const dirInfo = await API.genDirInfo(baseDir);
+      context.commit("setCurDirInfo", {baseDir, dirInfo} as CurDirInfo);
       // Clear the thumbnail map to prevent it from growing indefinitely. API is
       // always memoized with a LRU cache. We won't usually end up with a
       // refetch.

@@ -40,7 +40,10 @@ export default defineComponent({
 
     return () => {
       const sizePx = `${childSize.value}px`;
-      const files = store.state.curDirInfo?.contents ?? [];
+      const files = store.state.curDirInfo != null &&
+        store.state.curDirInfo?.baseDir === props.baseDir
+          ? store.state.curDirInfo.dirInfo.contents
+          : [];
       const thumbnails = store.state.thumbnails;
       return (
         <div class="Browser">
@@ -51,7 +54,7 @@ export default defineComponent({
               file={i}
               thumbnail={thumbnails.get(joinFileURL(props.baseDir, i))}
               onSelect={props.onSelect}
-              style={{height: sizePx, width: sizePx}}
+              style={{ height: sizePx, width: sizePx }}
             />
           )) : null}
           <div class="clearfix" />
