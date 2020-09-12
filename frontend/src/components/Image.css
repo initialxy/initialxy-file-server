@@ -1,7 +1,7 @@
 .Image {
   object-fit: cover;
   object-position: center top;
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.1s ease-out;
 }
 

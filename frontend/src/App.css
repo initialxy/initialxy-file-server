@@ -10,6 +10,7 @@ html, body, #app {
   background-position: center top;
   background-repeat: no-repeat;
   background-size: 100% 20em;
+  box-sizing: border-box;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-weight: 300;
   min-height: 100%;
