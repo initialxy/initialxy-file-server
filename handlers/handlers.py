@@ -3,6 +3,7 @@ from numpy import ndarray
 from utils.config import get_config
 from utils.thrift import serialize_bin
 from utils.tools import get_app_abs_path
+import mimetypes
 import os
 import pygen
 import re
@@ -12,21 +13,19 @@ CONFIG = get_config()
 INDEX_FILE = "../frontend/dist/index.html"
 DIR_THUMBNAIL_FILE = "thumbnail.jpg"
 THUMBNAILS_DIR = "__thumbnails"
-VIDEO_EXTENSIONS = {"mp4", "m4v", "webm"}
-IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "tiff"}
 
 
-class BaseHandler(tornado.web.RequestHandler):
+class BaseEndpointHandler(tornado.web.RequestHandler):
 
   def set_default_headers(self) -> None:
-    self.set_header("Content-Type", "application/json")
+    self.set_header("Content-Type", "application/octet-stream")
     if CONFIG.is_debug:
       self.set_header("Access-Control-Allow-Origin", "*")
       self.set_header("Access-Control-Allow-Headers", "x-requested-with")
       self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
 
 
-class DirHandler(BaseHandler):
+class DirHandler(BaseEndpointHandler):
   """
   Restful API endpoint to query directory information.
   """
@@ -36,9 +35,17 @@ class DirHandler(BaseHandler):
     if not os.path.isdir(abs_path):
       raise tornado.web.HTTPError(404)
 
-    files = [
-      pygen.types.File(os.path.isfile(os.path.join(abs_path, i)), i)
+    files_raw = [
+      (os.path.isfile(os.path.join(abs_path, i)), i)
       for i in os.listdir(abs_path)
+    ]
+    files = [
+      pygen.types.File(
+        is_file,
+        name,
+        mimetypes.guess_type(name)[0] if is_file else None,
+      )
+      for is_file, name in files_raw
     ]
     visible_files = [
       f
@@ -53,7 +60,7 @@ class DirHandler(BaseHandler):
     self.finish()
 
 
-class ThumbnailHandler(BaseHandler):
+class ThumbnailHandler(BaseEndpointHandler):
   """
   Restful API endpoint to query thumbnail. Try to generate if missing.
   """
@@ -69,15 +76,15 @@ class ThumbnailHandler(BaseHandler):
         thumbnail_file_name,
       )
 
-      extension = self.get_extention(abs_path)
+      mimetype, _ = mimetypes.guess_type(abs_path)
       if (
         not os.path.exists(thumbnail_file_path) and
-        extension in VIDEO_EXTENSIONS | IMAGE_EXTENSIONS
+        mimetype.split("/")[0] in {"video", "image"}
       ):
         thumbnail_dir = os.path.join(dirname, THUMBNAILS_DIR)
         if not os.path.exists(thumbnail_dir):
           os.mkdir(thumbnail_dir)
-        if extension in VIDEO_EXTENSIONS:
+        if mimetype.split("/")[0] == "video":
           self.create_video_thumbnail(abs_path, thumbnail_file_path)
         else:
           self.create_image_thumbnail(abs_path, thumbnail_file_path)

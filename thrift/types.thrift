@@ -1,6 +1,7 @@
 struct File {
   1: required bool is_file,
   2: required string name,
+  3: optional string mimetype,
 }
 
 struct DirInfo {

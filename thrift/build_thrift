@@ -1,4 +1,0 @@
-#/bin/bash
-
-thriftpyi . --output ../pygen --strict-optional
-thrift-typescript --outDir ../frontend/src/jsgen/ --sourceDir . types.thrift

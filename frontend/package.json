@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "thrift-typescript --outDir src/jsgen/ --sourceDir ../thirft ../thrift/types.thrift && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@creditkarma/thrift-typescript": "^3.7.6",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
     "@vue/cli-plugin-babel": "~4.5.0",
