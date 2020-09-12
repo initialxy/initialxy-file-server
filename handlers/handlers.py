@@ -77,14 +77,15 @@ class ThumbnailHandler(BaseEndpointHandler):
       )
 
       mimetype, _ = mimetypes.guess_type(abs_path)
+      file_type = mimetype.split("/")[0] if mimetype is not None else None
       if (
         not os.path.exists(thumbnail_file_path) and
-        mimetype.split("/")[0] in {"video", "image"}
+        file_type in {"video", "image"}
       ):
         thumbnail_dir = os.path.join(dirname, THUMBNAILS_DIR)
         if not os.path.exists(thumbnail_dir):
           os.mkdir(thumbnail_dir)
-        if mimetype.split("/")[0] == "video":
+        if file_type == "video":
           self.create_video_thumbnail(abs_path, thumbnail_file_path)
         else:
           self.create_image_thumbnail(abs_path, thumbnail_file_path)

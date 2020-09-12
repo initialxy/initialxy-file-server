@@ -31,7 +31,7 @@ def make_app() -> tornado.web.Application:
 if __name__ == "__main__":
   # Python 3.8 can correct guess m4v but not 3.7. So until Raspberry Pi OS gets
   # 3.8, keep this line here.
-  mimetypes.add_type("video/mp4", "m4v")
+  mimetypes.add_type("video/mp4", ".m4v")
   app = make_app()
   app.listen(CONFIG.port)
   tornado.ioloop.IOLoop.current().start()
