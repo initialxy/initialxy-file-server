@@ -1,25 +1,25 @@
 .Header {
-  height: 3em;
-  background: linear-gradient(69deg, rgba(1,164,235,1) 0%, rgba(177,136,255,1) 100%);
+  align-items: center;
+  background: linear-gradient(69deg, rgba(1,164,235,1) 0%, rgba(177,136,255,1) 100%) no-repeat;
+  box-shadow: 0 0 0.5em #0045637f;
   color: white;
   display: flex;
-  align-items: center;
-  padding-left: 2em;
-  box-shadow: 0 0 0.5em #0045637f;
+  height: 3em;
 }
 
 .Header h1 {
   font-size: 1.3em;
   font-weight: 300;
-  margin-left: 1.5em;
+  margin-right: 2em;
   padding: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.header .logo {
+.Header .logo {
   background-image: url("/logo_white.png");
   background-size: cover;
   height: 2em;
+  margin: 0 2em 0 2em;
   width: 2em;
 }

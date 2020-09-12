@@ -17,7 +17,7 @@ export default defineComponent({
 
     return () => (
       <div class="App">
-        <Header class="header" title={store.state.title} />
+        <Header title={store.state.title} />
         <Transition>
           <Browser
             class="browser"
