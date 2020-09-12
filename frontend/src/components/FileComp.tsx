@@ -4,6 +4,7 @@ import { emptyFunc } from "../utils/Misc";
 import { File } from "../jsgen/File";
 import { first } from "../utils/Misc";
 import { getFriendlyFileName, normalizeURL } from "../utils/URL";
+import Image from "./Image";
 
 function getFileIconClass(file: File): string {
   if (!file.is_file) {
@@ -37,25 +38,23 @@ export default defineComponent({
       props.onSelect && props.onSelect(props.file);
     }
 
-    return () => {
-      const backgroundImage = props.thumbnail != null
-        ? `url("${normalizeURL(props.thumbnail, true)}")`
-        : null;
-      return (
-        <div class="FileComp" onClick={onClick} onTouchstart={emptyFunc}>
-          <div class="inner">
-            <div class="thumbnail_container">
-              <div class={`icon fas ${getFileIconClass(props.file)}`} />
-              {
-                backgroundImage != null
-                  ? <div class="thumbnail" style={{ backgroundImage }} />
-                  : null
-              }
-            </div>
-            <div class="file_name">{getFriendlyFileName(props.file.name)}</div>
+    return () => (
+      <div class="FileComp" onClick={onClick} onTouchstart={emptyFunc}>
+        <div class="inner">
+          <div class="thumbnail_container">
+            <div class={`icon fas ${getFileIconClass(props.file)}`} />
+            {
+              props.thumbnail != null
+                ? <Image
+                  class="thumbnail"
+                  src={normalizeURL(props.thumbnail, true)}
+                />
+                : null
+            }
           </div>
+          <div class="file_name">{getFriendlyFileName(props.file.name)}</div>
         </div>
-      );
-    }
+      </div>
+    );
   }
 });
