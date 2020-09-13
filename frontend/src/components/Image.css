@@ -1,10 +1,16 @@
 .Image {
   object-fit: cover;
   object-position: center top;
+  display: none;
+}
+
+.Image.animate {
+  display: block;
   opacity: 0;
   transition: opacity 0.1s ease-out;
 }
 
 .Image.shown {
+  display: block;
   opacity: 1;
 }
