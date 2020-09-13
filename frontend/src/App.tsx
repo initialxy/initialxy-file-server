@@ -3,10 +3,10 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import { defineComponent, onMounted, Transition } from "vue";
 import { File } from "./jsgen/File"
-import UpButton from "./components/UpButton";
 import Browser from "./components/Browser";
 import Header from "./components/Header";
 import store from "./store";
+import UpButton from "./components/UpButton";
 
 export default defineComponent({
   name: "App",
@@ -15,38 +15,36 @@ export default defineComponent({
       store.dispatch("initRootDir");
     });
 
-    return () => {
-      return (
-        <div class="App">
-          <Header class="header" title={store.state.title} />
-          <Transition>
-            <div class="main" key={store.state.curDir}>
-              <Browser
-                class="browser"
-                baseDir={store.state.curDir}
-                onSelect={(file: File) => store.dispatch("selectFile", file)}
+    return () => (
+      <div class="App">
+        <Header class="header" title={store.state.title} />
+        <Transition>
+          <div class="main" key={store.state.curDir}>
+            <Browser
+              class="browser"
+              baseDir={store.state.curDir}
+              onSelect={(file: File) => store.dispatch("selectFile", file)}
+            />
+          </div>
+        </Transition>
+        <Transition>
+          {
+            store.getters.canPopDir
+              ? <UpButton
+                class="up_button"
+                onClick={() => store.dispatch("popDir")}
               />
-            </div>
-          </Transition>
-          <Transition>
-            {
-              store.getters.canPopDir
-                ? <UpButton
-                  class="up_button"
-                  onClick={() => store.dispatch("popDir")}
-                />
-                : null
-            }
-          </Transition>
-          <Transition>
-            {
-              store.state.shouldBlockScreen
-                ? <div class="screen_blocker" />
-                : null
-            }
-          </Transition>
-        </div>
-      );
-    }
+              : null
+          }
+        </Transition>
+        <Transition>
+          {
+            store.state.shouldBlockScreen
+              ? <div class="screen_blocker" />
+              : null
+          }
+        </Transition>
+      </div>
+    );
   }
 });

@@ -33,7 +33,7 @@ export default defineComponent({
     file: { type: Object as PropType<File>, required: true },
     thumbnail: String as PropType<string | null>,
     onSelect: Function as PropType<(file: File) => void>,
-    isVisited: {type: Boolean, default: false},
+    isVisited: { type: Boolean, default: false },
   },
   setup(props) {
     const onClick = (e: Event) => {
@@ -41,17 +41,15 @@ export default defineComponent({
       props.onSelect && props.onSelect(props.file);
     }
 
-    const href = normalizeURL(
-      joinFileURL(props.baseDir, props.file),
-      props.file.is_file,
-    );
-
     return () => (
       <a
         class="FileComp"
         onClick={onClick}
         onTouchstart={emptyFunc}
-        href={href}
+        href={normalizeURL(
+          joinFileURL(props.baseDir, props.file),
+          props.file.is_file,
+        )}
       >
         <div class="inner">
           <div class="thumbnail_container">

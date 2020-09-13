@@ -1,3 +1,4 @@
 #!/bin/bash
 mypy api.py
-tsc -p frontend
+cd frontend
+npm run typecheck

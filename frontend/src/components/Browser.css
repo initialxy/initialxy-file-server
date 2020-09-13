@@ -1,6 +1,7 @@
 .Browser {
   box-sizing: border-box;
   margin: 0;
+  padding-bottom: 2em;
 }
 
 .Browser > .child {

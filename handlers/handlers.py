@@ -82,13 +82,17 @@ class ThumbnailHandler(BaseEndpointHandler):
         not os.path.exists(thumbnail_file_path) and
         file_type in {"video", "image"}
       ):
-        thumbnail_dir = os.path.join(dirname, THUMBNAILS_DIR)
-        if not os.path.exists(thumbnail_dir):
-          os.mkdir(thumbnail_dir)
-        if file_type == "video":
-          self.create_video_thumbnail(abs_path, thumbnail_file_path)
-        else:
-          self.create_image_thumbnail(abs_path, thumbnail_file_path)
+        try:
+          thumbnail_dir = os.path.join(dirname, THUMBNAILS_DIR)
+          if not os.path.exists(thumbnail_dir):
+            os.mkdir(thumbnail_dir)
+          if file_type == "video":
+            self.create_video_thumbnail(abs_path, thumbnail_file_path)
+          else:
+            self.create_image_thumbnail(abs_path, thumbnail_file_path)
+        except:
+          # If OpenCV can't do it, then just leave it empty
+          pass
     else:
       thumbnail_file_path = os.path.join(abs_path, DIR_THUMBNAIL_FILE)
 

@@ -10,14 +10,16 @@ export default defineComponent({
   },
   setup(props) {
     const isShown = ref(false);
-    return () => <img
-      class={clx({
-        "Image": true,
-        "animate": props.shouldFadeIn,
-        "shown": isShown.value,
-      })}
-      src={props.src}
-      onLoad={(_: Event) => isShown.value = true}
-    />;
+    return () => (
+      <img
+        class={clx({
+          "Image": true,
+          "animate": props.shouldFadeIn,
+          "shown": isShown.value,
+        })}
+        src={props.src}
+        onLoad={(_: Event) => isShown.value = true}
+      />
+    );
   }
 });
