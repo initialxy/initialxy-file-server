@@ -17,14 +17,15 @@ export default defineComponent({
 
     return () => (
       <div class="App">
-        <Header title={store.state.title} />
+        <Header class="header" title={store.state.title} />
         <Transition>
-          <Browser
-            class="browser"
-            key={store.state.curDir}
-            baseDir={store.state.curDir}
-            onSelect={(file: File) => store.dispatch("selectFile", file)}
-          />
+          <div class="main" key={store.state.curDir}>
+            <Browser
+              class="browser"
+              baseDir={store.state.curDir}
+              onSelect={(file: File) => store.dispatch("selectFile", file)}
+            />
+          </div>
         </Transition>
         <Transition>
           {

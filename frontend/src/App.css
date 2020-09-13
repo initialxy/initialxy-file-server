@@ -3,6 +3,7 @@ html, body, #app {
   height: 100%;
   margin: 0;
   width: 100%;
+  overflow: hidden;
 }
 
 .App {
@@ -13,9 +14,8 @@ html, body, #app {
   box-sizing: border-box;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-weight: 300;
-  min-height: 100%;
+  height: 100%;
   overflow: hidden;
-  padding-bottom: 5em;
   position: relative;
   width: 100%;
 }
@@ -25,6 +25,20 @@ html, body, #app {
   position: fixed;
   right: 2em;
   z-index: 9;
+}
+
+.App > .header {
+  position: fixed;
+  width: 100%;
+  z-index: 8;
+}
+
+.App > .main {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  padding: 3em 0 2em 0;
+  box-sizing: border-box;
 }
 
 .App > .up_button.v-enter-active,
@@ -48,29 +62,29 @@ html, body, #app {
   transform: translateX(7em);
 }
 
-.App > .browser.v-enter-active,
-.App > .browser.v-leave-active {
+.App > .main.v-enter-active,
+.App > .main.v-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;
   position: absolute;
   z-index: 1;
 }
 
-.App > .browser.v-enter-from {
+.App > .main.v-enter-from {
   opacity: 0;
   transform: translateX(3em);
 }
 
-.App > .browser.v-enter-to {
+.App > .main.v-enter-to {
   opacity: 1;
   transform: translateX(0);
 }
 
-.App > .browser.v-leave-from {
+.App > .main.v-leave-from {
   opacity: 1;
   transform: translateX(0);
 }
 
-.App > .browser.v-leave-to {
+.App > .main.v-leave-to {
   opacity: 0;
   transform: translateX(-3em);
 }
