@@ -15,29 +15,38 @@ export default defineComponent({
       store.dispatch("initRootDir");
     });
 
-    return () => (
-      <div class="App">
-        <Header class="header" title={store.state.title} />
-        <Transition>
-          <div class="main" key={store.state.curDir}>
-            <Browser
-              class="browser"
-              baseDir={store.state.curDir}
-              onSelect={(file: File) => store.dispatch("selectFile", file)}
-            />
-          </div>
-        </Transition>
-        <Transition>
-          {
-            store.getters.canPopDir
-              ? <UpButton
-                class="up_button"
-                onClick={() => store.dispatch("popDir")}
+    return () => {
+      return (
+        <div class="App">
+          <Header class="header" title={store.state.title} />
+          <Transition>
+            <div class="main" key={store.state.curDir}>
+              <Browser
+                class="browser"
+                baseDir={store.state.curDir}
+                onSelect={(file: File) => store.dispatch("selectFile", file)}
               />
-              : null
-          }
-        </Transition>
-      </div>
-    );
+            </div>
+          </Transition>
+          <Transition>
+            {
+              store.getters.canPopDir
+                ? <UpButton
+                  class="up_button"
+                  onClick={() => store.dispatch("popDir")}
+                />
+                : null
+            }
+          </Transition>
+          <Transition>
+            {
+              store.state.shouldBlockScreen
+                ? <div class="screen_blocker" />
+                : null
+            }
+          </Transition>
+        </div>
+      );
+    }
   }
 });

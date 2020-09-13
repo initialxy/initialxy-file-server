@@ -41,6 +41,16 @@ html, body, #app {
   box-sizing: border-box;
 }
 
+.App > .screen_blocker {
+  background-color: #000000c7;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+
 .App > .up_button.v-enter-active,
 .App > .up_button.v-leave-active {
   transition: transform 0.3s ease;
@@ -64,27 +74,39 @@ html, body, #app {
 
 .App > .main.v-enter-active,
 .App > .main.v-leave-active {
-  transition: transform 0.3s ease, opacity 0.3s ease;
   position: absolute;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   z-index: 1;
 }
 
 .App > .main.v-enter-from {
   opacity: 0;
-  transform: translateX(3em);
+  transform: scale(0.9, 0.9);
 }
 
 .App > .main.v-enter-to {
   opacity: 1;
-  transform: translateX(0);
+  transform: scale(1, 1);
 }
 
 .App > .main.v-leave-from {
   opacity: 1;
-  transform: translateX(0);
+  transform: scale(1, 1);
 }
 
 .App > .main.v-leave-to {
   opacity: 0;
-  transform: translateX(-3em);
+  transform: scale(1.1, 1.1);
+}
+
+.App > .screen_blocker.v-enter-active {
+  transition: opacity 1s ease;
+}
+
+.App > .screen_blocker.v-enter-from {
+  opacity: 0;
+}
+
+.App > .screen_blocker.v-enter-to {
+  opacity: 1;
 }

@@ -38,6 +38,7 @@ export default createStore({
     curDirInfo: null as CurDirInfo | null,
     title: "",
     thumbnails: new Map<string, string | null>(),
+    shouldBlockScreen: false,
   },
   mutations: {
     setRootDir(state, rootDir: string): void {
@@ -46,10 +47,12 @@ export default createStore({
     setCurDir(state, navData: NavData): void {
       const newURL = normalizeURL(navData.contextPath, navData.isFile);
       if (navData.isFile === true) {
+        state.shouldBlockScreen = true;
         window.location.href = newURL;
         return;
       }
 
+      state.shouldBlockScreen = false;
       state.curDir = navData.contextPath;
       const lastDirName = getLastDirName(navData.contextPath);
       const title = getFriendlyFileName(lastDirName);
