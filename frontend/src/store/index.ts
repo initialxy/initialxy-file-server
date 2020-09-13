@@ -31,6 +31,21 @@ type CurDirInfo = {
   dirInfo: DirInfo;
 }
 
+function getVisitedFromStorage(): Set<string> {
+  const visited: {[key: string]: boolean} = JSON.parse(
+    window.localStorage.getItem("visited") ?? "{}",
+  );
+  return new Set(Object.keys(visited));
+}
+
+function putVisitedToStorage(visited: Set<string>): void {
+  const obj: {[key: string]: boolean} = {};
+  for(const v of visited) {
+    obj[v] = true;
+  }
+  window.localStorage.setItem("visited", JSON.stringify(obj));
+}
+
 export default createStore({
   state: {
     rootDir: "/",
@@ -39,6 +54,7 @@ export default createStore({
     title: "",
     thumbnails: new Map<string, string | null>(),
     shouldBlockScreen: false,
+    visited: getVisitedFromStorage(),
   },
   mutations: {
     setRootDir(state, rootDir: string): void {
@@ -81,6 +97,10 @@ export default createStore({
     resetThumbnails(state): void {
       state.thumbnails.clear();
     },
+    saveVisited(state, contextPath: string): void {
+      state.visited.add(contextPath);
+      putVisitedToStorage(state.visited);
+    },
   },
   getters: {
     canPopDir(state): boolean {
@@ -101,6 +121,7 @@ export default createStore({
       });
     },
     updateDir(context, navData: NavData): void {
+      context.commit("saveVisited", navData.contextPath);
       context.commit("setCurDir", navData);
       if (navData.isFile == null || !navData.isFile) {
         context.dispatch("fetchCurDir");

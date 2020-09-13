@@ -33,6 +33,7 @@ export default defineComponent({
     file: { type: Object as PropType<File>, required: true },
     thumbnail: String as PropType<string | null>,
     onSelect: Function as PropType<(file: File) => void>,
+    isVisited: {type: Boolean, default: false},
   },
   setup(props) {
     const onClick = (e: Event) => {
@@ -66,6 +67,7 @@ export default defineComponent({
           </div>
           <div class="file_name">
             {getFriendlyFileName(props.file.name)}
+            {props.isVisited ? <div class="visited" /> : null}
           </div>
         </div>
       </a>

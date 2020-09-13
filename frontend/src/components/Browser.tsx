@@ -55,6 +55,7 @@ export default defineComponent({
               file={i}
               thumbnail={thumbnails.get(joinFileURL(props.baseDir, i))}
               onSelect={props.onSelect}
+              isVisited={store.state.visited.has(joinFileURL(props.baseDir, i))}
               style={{ height: sizePx, width: sizePx }}
             />
           )) : null}

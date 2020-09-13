@@ -75,11 +75,22 @@
   box-sizing: border-box;
   color: #323232;
   flex-grow: 0;
+  overflow: hidden;
   padding: 0.5em;
   position: relative;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.FileComp > .inner > .file_name > .visited {
+  width: 1em;
+  height: 2em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #50bebd;
+  transform: translate(-0.7em, -0.7em) rotate(45deg);
 }
 
 @media(hover: hover) {
