@@ -32,15 +32,15 @@ type CurDirInfo = {
 }
 
 function getVisitedFromStorage(): Set<string> {
-  const visited: {[key: string]: boolean} = JSON.parse(
+  const visited: { [key: string]: boolean } = JSON.parse(
     window.localStorage.getItem("visited") ?? "{}",
   );
   return new Set(Object.keys(visited));
 }
 
 function putVisitedToStorage(visited: Set<string>): void {
-  const obj: {[key: string]: boolean} = {};
-  for(const v of visited) {
+  const obj: { [key: string]: boolean } = {};
+  for (const v of visited) {
     obj[v] = true;
   }
   window.localStorage.setItem("visited", JSON.stringify(obj));
@@ -98,8 +98,10 @@ export default createStore({
       state.thumbnails.clear();
     },
     saveVisited(state, contextPath: string): void {
-      state.visited.add(contextPath);
-      putVisitedToStorage(state.visited);
+      if (!state.visited.has(contextPath)) {
+        state.visited.add(contextPath);
+        putVisitedToStorage(state.visited);
+      }
     },
   },
   getters: {
@@ -130,7 +132,7 @@ export default createStore({
     async fetchCurDir(context): Promise<void> {
       const baseDir = context.state.curDir;
       const dirInfo = await API.genDirInfo(baseDir);
-      context.commit("setCurDirInfo", {baseDir, dirInfo} as CurDirInfo);
+      context.commit("setCurDirInfo", { baseDir, dirInfo } as CurDirInfo);
       // Clear the thumbnail map to prevent it from growing indefinitely. API is
       // always memoized with a LRU cache. We won't usually end up with a
       // refetch.
