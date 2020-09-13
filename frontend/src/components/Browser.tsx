@@ -51,6 +51,7 @@ export default defineComponent({
             <ItemComp
               class="child"
               key={joinFileURL(props.baseDir, i)}
+              baseDir={props.baseDir}
               file={i}
               thumbnail={thumbnails.get(joinFileURL(props.baseDir, i))}
               onSelect={props.onSelect}

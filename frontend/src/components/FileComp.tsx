@@ -3,7 +3,7 @@ import { defineComponent, PropType } from "vue";
 import { emptyFunc } from "../utils/Misc";
 import { File } from "../jsgen/File";
 import { first } from "../utils/Misc";
-import { getFriendlyFileName, normalizeURL } from "../utils/URL";
+import { getFriendlyFileName, normalizeURL, joinFileURL } from "../utils/URL";
 import Image from "./Image";
 
 function getFileIconClass(file: File): string {
@@ -29,17 +29,29 @@ function getFileIconClass(file: File): string {
 export default defineComponent({
   name: "FileComp",
   props: {
+    baseDir: { type: String, required: true },
     file: { type: Object as PropType<File>, required: true },
     thumbnail: String as PropType<string | null>,
     onSelect: Function as PropType<(file: File) => void>,
   },
   setup(props) {
-    const onClick = (_: Event) => {
+    const onClick = (e: Event) => {
+      e.preventDefault();
       props.onSelect && props.onSelect(props.file);
     }
 
+    const href = normalizeURL(
+      joinFileURL(props.baseDir, props.file),
+      props.file.is_file,
+    );
+
     return () => (
-      <div class="FileComp" onClick={onClick} onTouchstart={emptyFunc}>
+      <a
+        class="FileComp"
+        onClick={onClick}
+        onTouchstart={emptyFunc}
+        href={href}
+      >
         <div class="inner">
           <div class="thumbnail_container">
             <div class={`icon fas ${getFileIconClass(props.file)}`} />
@@ -52,9 +64,11 @@ export default defineComponent({
                 : null
             }
           </div>
-          <div class="file_name">{getFriendlyFileName(props.file.name)}</div>
+          <div class="file_name">
+            {getFriendlyFileName(props.file.name)}
+          </div>
         </div>
-      </div>
+      </a>
     );
   }
 });
