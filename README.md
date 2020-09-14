@@ -1,9 +1,7 @@
 # initialxy-file-server
 ![Showcase](app_showcase.gif)
 
-Yet another Raspberry Pi project of mine. This is a personal project, **not meant for production usages**. This project serves as an intentionally minimal file server that allows you to browse file directories starting from a sub directory. It is meant to be engaging, colorful and easy to use for kids.
-
-I got a Amazon Fire tablet for my daughter during the 2020 lockdown. While I like FreeTime, which is their kids UI, for whatever reason you can't put Amazon Prime free videos on it. You can watch them in the normal UI. You can put videos that you bought on FreeTime. But not Prime free videos. However FreeTime allows you to allowlist URLs to be opned in browser. That became the inception of this project.
+Yet another Raspberry Pi project of mine. This is a personal project, **not meant for production usages**. This project serves as an intentionally minimal file server that allows you to browse file directories from a configured directory. It is meant to be engaging, colorful and easy to use for kids, so you can put your own photos, study materials etc on Amazon FreeTime in an organized fashion.
 
 # Technial background
 One might ask, there are already tons of open source file servers out there. Why reinvent the wheel? As a matter of fact, I did put [Nextcloud](https://github.com/nextcloud) on my Raspberry Pi 3 and it works. But it's choking both the Raspberry Pi as well as Amazon Fire. Furthermore, its UI is much more advanced, and certainly not kids friendly. This project is meant to be light weight and intentionally minimal. I took this opportunity to update myself on Python 3.8 and Vue 3.0. It's a fun learning experience for me.
@@ -31,7 +29,7 @@ Nevertheless, here is the full build steps
     cd ..
     ./build
 
-To run this app in dev mode, run
+To run this app in dev mode
 
     ./run --debug
 
@@ -42,18 +40,18 @@ Then open a second terminal instance and run
 
 Go to http://localhost:8080 in your browser.
 
-To run this app in prod mode, simply run
+To run this app in prod mode without sourcing venv
 
     sudo ./run
 
-Without needing to source venv. Alternatively
+Alternatively, if you opt not to use venv
 
     sudo python3 api.py
 
-If you are not using venv. Note that `sudo` is needed to acquire port 80. FreeTime browser will not work with any other ports. If you wish to change it, then you can edit it in `appconfig.json`.
+Note that `sudo` is needed to acquire port 80. FreeTime browser will not work with any other port. If you wish to change it, then you can edit it in `appconfig.json`.
 
 # Configure
-Open `appconfig.json` and you can set the root directory where you want files to be served as well as port. Again, keep in mind that port should set to 80 in order for it to work in FreeTime, but 8000 for dev mode. If you were to change `devPort`, then you also need to change it in [frontend code](https://github.com/initialxy/initialxy-file-server/blob/master/frontend/src/utils/URL.ts), which assumes server will run on port 8000.
+Open `appconfig.json` and you can set the root directory where you want files to be served as well as port. Again, keep in mind that port should set to 80 in order for it to work in FreeTime, but 8000 for dev mode. If you were to change `devPort`, then you also need to change it in [frontend code](https://github.com/initialxy/initialxy-file-server/blob/master/frontend/src/utils/URL.ts), which assumes backend will run on port 8000.
 
 You can create a `thumbnail.jpg` under a folder to serve as folder thumbnail. Thumbnails for image and video files will be automatically generated (at the best ability of OpenCV) and stored in a folder named `__thumbnails`.
 
