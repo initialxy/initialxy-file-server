@@ -10,6 +10,7 @@ export default defineComponent({
   },
   setup(props) {
     const isShown = ref(false);
+    const onLoad = (_: Event) => isShown.value = true;
     return () => (
       <img
         class={clx({
@@ -18,7 +19,7 @@ export default defineComponent({
           "shown": isShown.value,
         })}
         src={props.src}
-        onLoad={(_: Event) => isShown.value = true}
+        onLoad={onLoad}
       />
     );
   }

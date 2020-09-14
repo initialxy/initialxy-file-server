@@ -15,6 +15,9 @@ export default defineComponent({
       store.dispatch("initRootDir");
     });
 
+    const onUpClicked = () => store.dispatch("popDir");
+    const onFileSelected = (file: File) => store.dispatch("selectFile", file);
+
     return () => (
       <div class="App">
         <Header class="header" title={store.state.title} />
@@ -23,7 +26,7 @@ export default defineComponent({
             <Browser
               class="browser"
               baseDir={store.state.curDir}
-              onSelect={(file: File) => store.dispatch("selectFile", file)}
+              onSelect={onFileSelected}
             />
           </div>
         </Transition>
@@ -32,7 +35,7 @@ export default defineComponent({
             store.getters.canPopDir
               ? <UpButton
                 class="up_button"
-                onClick={() => store.dispatch("popDir")}
+                onClick={onUpClicked}
               />
               : null
           }
