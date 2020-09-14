@@ -1,9 +1,9 @@
-import "./Image.css"
+import "./Image.css";
 import { clx } from "../utils/Misc";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: 'Image',
+  name: "Image",
   props: {
     src: { type: String, required: true },
     shouldFadeIn: { type: Boolean, default: false },

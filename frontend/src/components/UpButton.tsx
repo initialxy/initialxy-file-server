@@ -1,9 +1,9 @@
-import "./UpButton.css"
+import "./UpButton.css";
 import { defineComponent, PropType } from "vue";
 import { emptyFunc } from "../utils/Misc";
 
 export default defineComponent({
-  name: 'UpButton',
+  name: "UpButton",
   props: {
     onClick: Function as PropType<() => void>,
   },

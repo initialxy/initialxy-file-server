@@ -1,8 +1,8 @@
-import "./Header.css"
+import "./Header.css";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'Header',
+  name: "Header",
   props: {
     title: { type: String, required: true },
   },
