@@ -1,4 +1,6 @@
 # initialxy-file-server
+![Showcase](app_showcase.gif)
+
 Yet another Raspberry Pi project of mine. This is a personal project, **not meant for production usages**. This project serves as an intentionally minimal file server that allows you to browse file directories starting from a sub directory. It is meant to be engaging, colorful and easy to use for kids.
 
 I got a Amazon Fire tablet for my daughter during the 2020 lockdown. While I like FreeTime, which is their kids UI, for whatever reason you can't put Amazon Prime free videos on it. You can watch them in the normal UI. You can put videos that you bought on FreeTime. But not Prime free videos. However FreeTime allows you to allowlist URLs to be opned in browser. That became the inception of this project.
@@ -46,7 +48,9 @@ To run this app in prod mode, first edit `appcopnfig.json` and change port to 80
     sudo ./run  # sudo is needed for acquiring lower ports
 
 # Configure
-There isn't much to configure. Open `appconfig.json` and you can set the root directory where you want files to be served as well as port. Again, keep in mind that port should set to 80 in order for it to work in FreeTime, but 8000 for dev mode.
+Open `appconfig.json` and you can set the root directory where you want files to be served as well as port. Again, keep in mind that port should set to 80 in order for it to work in FreeTime, but 8000 for dev mode.
+
+You can create a `thumbnail.jpg` under a folder to serve as folder thumbnail. Thumbnails for image and video files will be automatically generated (at the best capacity of OpenCV) and stored in a folder named `__thumbnails`.
 
 # Reminder
 Files can open be opened at the capabilities of the Amazon Silk browser. If a file format cannot be handled by the Silk browser, then nothing will happen in FreeTime (though it will attempt to download in normal mode). So make sure you convert your files to a web friendly format ahead of time. eg. mp4, m4v, jpg etc.
