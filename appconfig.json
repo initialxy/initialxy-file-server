@@ -1,4 +1,5 @@
 {
   "root_dir": "/home/initialxy/Downloads/test",
-  "port": 8000
+  "port": 80,
+  "devPort": 8000
 }

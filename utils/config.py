@@ -36,6 +36,7 @@ def get_config() -> Config:
 
   return Config(
     config_dict["root_dir"],
-    config_dict.get("port", 8000),
+    config_dict.get("port", 80)
+      if not IS_DEBUG else config_dict.get("devPort", 8000),
     IS_DEBUG,
   )
