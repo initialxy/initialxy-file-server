@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="folded_corner.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2008">
+      <stop
+         style="stop-color:#b6b6b6;stop-opacity:1"
+         offset="0"
+         id="stop2004" />
+      <stop
+         style="stop-color:#f7f7f7;stop-opacity:1"
+         offset="1"
+         id="stop2006" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient859">
+      <stop
+         style="stop-color:#eaeaea;stop-opacity:1"
+         offset="0"
+         id="stop855" />
+      <stop
+         style="stop-color:#ededed;stop-opacity:1"
+         offset="1"
+         id="stop857" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient859"
+       id="linearGradient861"
+       x1="445.03735"
+       y1="603.73578"
+       x2="458.58578"
+       y2="615.62476"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1982"
+       x="-0.051144359"
+       width="1.1022887"
+       y="-0.045219878"
+       height="1.0904398">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.65506967"
+         id="feGaussianBlur1984" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2008"
+       id="linearGradient2010"
+       x1="-43.098827"
+       y1="198.28914"
+       x2="-43.037701"
+       y2="202.61714"
+       gradientUnits="userSpaceOnUse" />
+    <mask
+       id="mask855"
+       maskUnits="userSpaceOnUse">
+      <path
+         style="fill:#49d92d;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M -22.048056,197.91922 -46.08084,218.68217 -63.487285,198.64145 Z"
+         id="path857" />
+    </mask>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="17.372424"
+     inkscape:cy="773.64411"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:object-paths="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-global="false"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-nodes="true"
+     inkscape:bbox-paths="false"
+     inkscape:snap-smooth-nodes="false"
+     inkscape:object-nodes="true"
+     inkscape:snap-others="false"
+     inkscape:window-width="3836"
+     inkscape:window-height="2112"
+     inkscape:window-x="0"
+     inkscape:window-y="22"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       inkscape:export-filename="/home/initialxy/git/initialxy-file-server/frontend/public/folded_corner.png"
+       id="path1611"
+       d="m 135.35246,146.0748 -1.5e-4,31.75964 -26.54449,0.0698 z"
+       style="fill:#f7f7f7;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path852"
+       style="fill:url(#linearGradient861);fill-opacity:1;stroke:none;stroke-width:0.377953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 511.56836,552.09375 c 0,0 -8.7964,10.60352 -20.92399,18.37928 -6.54618,4.19717 -14.47983,7.67784 -20.4141,9.36362 -6.64224,1.88689 -16.16948,1.77622 -27.15525,12.29457 -10.60571,10.15446 -12.77116,24.62534 -14.11329,33.6808 -1.07403,7.2465 -7.41401,26.3327 -9.62967,31.24218 -2.0034,4.43914 -8.08988,15.33995 -8.08988,15.33995 z"
+       transform="scale(0.26458333)"
+       sodipodi:nodetypes="cssssscc"
+       inkscape:export-filename="/home/initialxy/git/initialxy-file-server/frontend/public/folded_corner.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="path873"
+       mask="url(#mask855)"
+       style="opacity:0.998312;mix-blend-mode:normal;fill:url(#linearGradient2010);fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter1982)"
+       transform="rotate(-49.174594)"
+       d="m -21.014513,195.36555 c 0,1.86365 -7.296027,3.68766 -8.214266,4.07393 -5.280506,2.22133 -6.567391,4.46445 -13.980995,4.46445 -6.579208,0 -11.48138,-3.1846 -12.708462,-3.62925 -1.339803,-0.48549 -9.486799,-2.72449 -9.486799,-4.90913 0,-4.71561 9.937167,-8.53837 22.195261,-8.53837 12.258094,0 22.195247,3.82276 22.195261,8.53837"
+       sodipodi:nodetypes="csssssc"
+       inkscape:export-filename="/home/initialxy/git/initialxy-file-server/frontend/public/folded_corner.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>

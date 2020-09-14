@@ -2,7 +2,7 @@ import "./FileComp.css";
 import { defineComponent, PropType } from "vue";
 import { emptyFunc } from "../utils/Misc";
 import { File } from "../jsgen/File";
-import { first } from "../utils/Misc";
+import { first, clx } from "../utils/Misc";
 import { getFriendlyFileName, normalizeURL, joinFileURL } from "../utils/URL";
 import Image from "./Image";
 
@@ -43,7 +43,7 @@ export default defineComponent({
 
     return () => (
       <a
-        class="FileComp"
+        class={clx({"FileComp": true, "folder": !props.file.is_file})}
         onClick={onClick}
         onTouchstart={emptyFunc}
         href={normalizeURL(

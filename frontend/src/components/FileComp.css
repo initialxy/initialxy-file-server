@@ -83,6 +83,14 @@
   white-space: nowrap;
 }
 
+.FileComp.folder > .inner > .file_name {
+  background-image: url("/folded_corner.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 10%;
+  padding-right: 0.8em;
+}
+
 .FileComp > .inner > .file_name > .visited {
   width: 1em;
   height: 2em;
