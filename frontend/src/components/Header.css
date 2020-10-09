@@ -8,9 +8,11 @@
 }
 
 .Header h1 {
+  flex-grow: 1;
   font-size: 1.3em;
   font-weight: 300;
-  margin-right: 2em;
+  margin-right: 1.5em;
+  overflow: hidden;
   padding: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -21,5 +23,6 @@
   background-size: cover;
   height: 2em;
   margin: 0 0.5em 0 2em;
+  min-width: 2em;
   width: 2em;
 }
