@@ -28,6 +28,7 @@ export default defineComponent({
               baseDir={store.state.curDir}
               onSelect={onFileSelected}
             />
+            <div class="darken" />
           </div>
         </Transition>
         <Transition>

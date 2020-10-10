@@ -43,6 +43,17 @@ html, body, #app {
   width: 100%;
 }
 
+.App > .main > .darken {
+  background-color: black;
+  display: none;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
 .App > .main::-webkit-scrollbar {
   display: none;
 }
@@ -99,6 +110,19 @@ html, body, #app {
 
 .App > .main.v-leave-to {
   transform: translate(-30%, 0);
+}
+
+.App > .main.v-leave-active > .darken {
+  display: block;
+  transition: opacity 0.5s ease;
+}
+
+.App > .main.v-leave-from > .darken {
+  opacity: 0;
+}
+
+.App > .main.v-leave-to > .darken {
+  opacity: 0.3;
 }
 
 .App > .screen_blocker.v-enter-active {
