@@ -2,7 +2,6 @@ import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import { defineComponent, onMounted, Transition } from "vue";
-import { File } from "./jsgen/File"
 import Browser from "./components/Browser";
 import Header from "./components/Header";
 import store from "./store";
@@ -16,18 +15,13 @@ export default defineComponent({
     });
 
     const onUpClicked = () => store.dispatch("popDir");
-    const onFileSelected = (file: File) => store.dispatch("selectFile", file);
 
     return () => (
       <div class="App">
         <Header class="header" title={store.state.title} />
         <Transition>
           <div class="main" key={store.state.curDir}>
-            <Browser
-              class="browser"
-              baseDir={store.state.curDir}
-              onSelect={onFileSelected}
-            />
+            <Browser class="browser" />
             <div class="darken" />
           </div>
         </Transition>

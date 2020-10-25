@@ -1,5 +1,5 @@
 import "./Browser.css";
-import { defineComponent, PropType, onMounted, onUnmounted, ref } from "vue";
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { File } from "../jsgen/File";
 import { joinFileURL } from "../utils/URL";
 import ItemComp from "./FileComp";
@@ -10,11 +10,7 @@ const CHILD_MARGIN_EM = 2;
 
 export default defineComponent({
   name: "Browser",
-  props: {
-    baseDir: { type: String, required: true },
-    onSelect: Function as PropType<(file: File) => void>,
-  },
-  setup(props) {
+  setup() {
     const pxInEm = parseFloat(getComputedStyle(document.body).fontSize);
     const childSize = ref(0);
     const reComputeChildSize = () => {
@@ -38,24 +34,25 @@ export default defineComponent({
       window.removeEventListener("resize", reComputeChildSize);
     });
 
+    const onSelect = (file: File) => store.dispatch("selectFile", file);
+
     return () => {
       const sizePx = `${childSize.value}px`;
-      const files = store.state.curDirInfo != null &&
-        store.state.curDirInfo?.baseDir === props.baseDir
-          ? store.state.curDirInfo.dirInfo.contents
-          : [];
+      const files = store.state.curDirInfo?.dirInfo.contents ?? [];
       const thumbnails = store.state.thumbnails;
       return (
         <div class="Browser">
           {childSize.value > 0 ? Array.from(files).map(i => (
             <ItemComp
               class="child"
-              key={joinFileURL(props.baseDir, i)}
-              baseDir={props.baseDir}
+              key={joinFileURL(store.state.curDir, i)}
+              baseDir={store.state.curDir}
               file={i}
-              thumbnail={thumbnails.get(joinFileURL(props.baseDir, i))}
-              onSelect={props.onSelect}
-              isVisited={store.state.visited.has(joinFileURL(props.baseDir, i))}
+              thumbnail={thumbnails.get(joinFileURL(store.state.curDir, i))}
+              onSelect={onSelect}
+              isVisited={
+                store.state.visited.has(joinFileURL(store.state.curDir, i))
+              }
               style={{ height: sizePx, width: sizePx }}
             />
           )) : null}
