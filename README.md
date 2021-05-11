@@ -1,7 +1,7 @@
 # initialxy-file-server
 ![Showcase](app_showcase.gif)
 
-Yet another Raspberry Pi project of mine. This is a personal project, **not meant for production usages**. This project serves as an intentionally minimal file server that allows you to browse file directories from a configured directory. It is meant to be engaging, colorful and easy to use for kids, so you can put your own photos, study materials etc on Amazon FreeTime in an organized fashion.
+Yet another Raspberry Pi project of mine. This is a personal project, **not meant for production usages**. This project serves as an intentionally minimal file server that allows you to browse file directories from a configured directory. It is meant to be engaging, colorful and easy to use for kids, so you can put your own photos, study materials etc on Amazon Kids (FreeTime) tablets in an organized fashion.
 
 # Technial background
 One might ask, there are already tons of open source file servers out there. Why reinvent the wheel? As a matter of fact, I did put [Nextcloud](https://github.com/nextcloud) on my Raspberry Pi 3 and it works. But it's choking both the Raspberry Pi as well as Amazon Fire. Furthermore, its UI is much more advanced, and certainly not kids friendly. This project is meant to be light weight and intentionally minimal. I took this opportunity to update myself on Python 3.8 and Vue 3.0. It's a fun learning experience for me.
@@ -14,7 +14,7 @@ Like I mentioned, this project serves as a learning tool for me. So like my othe
 * node 14.9.0+
 
 # Build and run
-I used [venv](https://docs.python.org/3/library/venv.html) to create a virtual env first, though that's optional. On the actual Raspberry Pi, installing OpenCV from pip was actually quite difficult. I followed [this guide](https://pimylifeup.com/raspberry-pi-opencv/) to install build tools and bumpped swap to 2GB for OpenCV to finally successfully build with pip, though I'm not sure which of these steps is actually necessary. It took me over 2 hours to build OpenCV on my Raspberry Pi 3, so I'm not going back to retry with different configurations. It's probably easier to just install prebuilt binaries from apt instead. ie.
+I used [venv](https://docs.python.org/3/library/venv.html) to create a virtual env first, though that's optional. On an actual Raspberry Pi, installing OpenCV from pip was actually quite difficult. I followed [this guide](https://pimylifeup.com/raspberry-pi-opencv/) to install build tools and bumped swap to 2GB for OpenCV to finally successfully build with pip, though I'm not sure which of these steps is actually necessary. It took me over 2 hours to build OpenCV on my Raspberry Pi 3, so I'm not going back to retry with different configurations. It's probably easier to just install prebuilt binaries from apt instead. ie.
 
     sudo apt install python3-opencv
 
@@ -48,15 +48,15 @@ Alternatively, if you opt not to use venv
 
     sudo python3 api.py
 
-Note that `sudo` is needed to acquire port 80. FreeTime browser will not work with any other port. If you wish to change it, then you can edit it in `appconfig.json`.
+Note that `sudo` is needed to acquire port 80. Amazon Kids browser will not work with any other port. If you wish to change it, then you can edit it in `appconfig.json`.
 
 # Configure
-Open `appconfig.json` and you can set the root directory where you want files to be served as well as port. Again, keep in mind that port should set to 80 in order for it to work in FreeTime, but 8000 for dev mode. If you were to change `devPort`, then you also need to change it in [frontend code](https://github.com/initialxy/initialxy-file-server/blob/master/frontend/src/utils/URL.ts), which assumes backend will run on port 8000.
+Open `appconfig.json` and you can set the root directory where you want files to be served as well as port. Again, keep in mind that port should set to 80 in order for it to work in Amazon Kids, but 8000 for dev mode. If you were to change `devPort`, then you also need to change it in [frontend code](https://github.com/initialxy/initialxy-file-server/blob/master/frontend/src/utils/URL.ts), which assumes backend will run on port 8000.
 
 You can create a `thumbnail.jpg` under a folder to serve as folder thumbnail. Thumbnails for image and video files will be automatically generated (at the best ability of OpenCV) and stored in a folder named `__thumbnails`.
 
 # Reminder
-Files can open be opened at the capabilities of the Amazon Silk browser. If a file format cannot be handled by the Silk browser, then nothing will happen in FreeTime (though it will attempt to download in normal mode). So make sure you convert your files to a web friendly format ahead of time. eg. mp4, m4v, jpg etc.
+Files can only be opened at the capabilities of Amazon Silk browser. If a file format cannot be handled by Silk browser, then nothing will happen in Amazon Kids (though it will attempt to download in normal mode). So make sure you convert your files to a web friendly format ahead of time. eg. mp4, m4v, jpg etc.
 
 # License
 MIT
