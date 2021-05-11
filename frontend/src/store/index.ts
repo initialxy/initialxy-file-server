@@ -10,7 +10,7 @@ import {
 } from "../utils/URL";
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
-import { chunk } from "../utils/Misc";
+import { chunk, isIOS } from "../utils/Misc";
 
 const MAX_API_BATCH = 5;
 
@@ -110,6 +110,9 @@ export default createStore({
         putVisitedToStorage(state.visited);
       }
     },
+    resetBlockScreen(state): void {
+      state.shouldBlockScreen = false;
+    }
   },
   getters: {
     canPopDir(state): boolean {
@@ -128,6 +131,14 @@ export default createStore({
           { contextPath: getCurPath() } as NavData,
         );
       });
+
+      // On iOS, back will restore page state. Reset block screen when page
+      // becomes visible again after closing video.
+      if (isIOS()) {
+        window.addEventListener("pageshow", (_: Event) => {
+          context.commit("resetBlockScreen");
+        });
+      }
     },
     updateDir(context, navData: NavData): void {
       context.commit("saveVisited", navData.contextPath);

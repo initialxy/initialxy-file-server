@@ -12,7 +12,7 @@ export function first<T>(arr?: T[]): T | null {
   return arr != null && arr.length > 0 ? arr[0] : null;
 }
 
-export function clx(clsDef: {[cls: string]: boolean}): string {
+export function clx(clsDef: { [cls: string]: boolean }): string {
   const classes = [];
   for (const c in clsDef) {
     if (clsDef[c]) {
@@ -20,4 +20,10 @@ export function clx(clsDef: {[cls: string]: boolean}): string {
     }
   }
   return classes.join(" ");
+}
+
+export function isIOS(): boolean {
+  return (/iPad|iPhone|iPod/.test(navigator.platform) ||
+    navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) &&
+    !window.MSStream
 }
