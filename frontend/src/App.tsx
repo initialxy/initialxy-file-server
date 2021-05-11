@@ -16,16 +16,16 @@ export default defineComponent({
     });
 
     const onUpClicked = () => store.dispatch("popDir");
-    // On iOS users will likely swipe from left to go back, so don't show
-    // animation, otherwise it will look like the page came back and then
+    // On iOS users will likely swipe from left to go back. So don't show
+    // animation, otherwise it will look like a page came back and then
     // animated away.
-    const showBackAnimation = !isIOS();
+    const shouldAnimateBackNav = !isIOS();
 
     return () => (
       <div class={clx({
         "App": true,
         "is_forward_nav": store.state.isForwardNav,
-        "is_backward_nav": !store.state.isForwardNav && showBackAnimation,
+        "is_backward_nav": !store.state.isForwardNav && shouldAnimateBackNav,
       })}>
         <Header class="header" title={store.state.title} />
         <Transition>
