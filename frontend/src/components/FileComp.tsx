@@ -43,7 +43,7 @@ export default defineComponent({
 
     return () => (
       <a
-        class={clx({"FileComp": true, "folder": !props.file.is_file})}
+        class={clx({ "FileComp": true, "folder": !props.file.is_file })}
         onClick={onClick}
         onTouchstart={emptyFunc}
         href={normalizeURL(

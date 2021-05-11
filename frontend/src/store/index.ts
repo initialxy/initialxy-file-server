@@ -171,6 +171,12 @@ export default createStore({
         { contextPath: newContextPath, isForwardNav: true } as NavData,
       );
     },
+    goToRoot(context): void {
+      context.dispatch(
+        "updateDir",
+        { contextPath: context.state.rootDir, isForwardNav: true } as NavData,
+      );
+    },
     async fetchThumbnails(context, files: File[]): Promise<void> {
       const contextPaths = files
         .map(f => joinFileURL(context.state.curDir, f))

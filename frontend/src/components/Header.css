@@ -24,5 +24,16 @@
   height: 2em;
   margin: 0 0.5em 0 2em;
   min-width: 2em;
+  transition: transform 0.1s ease-out;
   width: 2em;
+}
+
+.Header .logo:active {
+  transform: translate(0.1em, 0.1em);
+}
+
+@media(hover: hover) {
+  .Header > .logo:hover {
+    transform: translate(0.1em, 0.1em);
+  }
 }
