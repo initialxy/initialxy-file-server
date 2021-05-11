@@ -73,10 +73,6 @@ export default createStore({
 
       state.shouldBlockScreen = false;
       state.curDir = navData.contextPath;
-      state.curDirInfo = {
-        baseDir: navData.contextPath,
-        dirInfo: new DirInfo({ contents: [] }),
-      } as CurDirInfo;
       const lastDirName = getLastDirName(navData.contextPath);
       const title = getFriendlyFileName(lastDirName);
       document.title = title;

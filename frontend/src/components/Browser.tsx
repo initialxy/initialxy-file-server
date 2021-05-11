@@ -38,7 +38,9 @@ export default defineComponent({
 
     return () => {
       const sizePx = `${childSize.value}px`;
-      const files = store.state.curDirInfo?.dirInfo.contents ?? [];
+      const files = store.state.curDirInfo?.baseDir === store.state.curDir
+        ? store.state.curDirInfo?.dirInfo.contents ?? []
+        : [];
       const thumbnails = store.state.thumbnails;
       return (
         <div class="Browser">

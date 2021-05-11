@@ -2,7 +2,6 @@ from cv2 import cv2
 from numpy import ndarray
 from utils.config import get_config
 from utils.thrift import serialize_bin
-from utils.tools import get_app_abs_path
 import mimetypes
 import os
 import pygen
