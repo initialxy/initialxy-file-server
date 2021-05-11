@@ -89,40 +89,75 @@ html, body, #app {
   transform: translateX(7em);
 }
 
-.App > .main.v-enter-active,
-.App > .main.v-leave-active {
+.App.is_forward_nav > .main.v-enter-active,
+.App.is_forward_nav > .main.v-leave-active,
+.App.is_backward_nav > .main.v-enter-active,
+.App.is_backward_nav > .main.v-leave-active {
   position: absolute;
   transition: transform 0.5s ease;
   z-index: 1;
 }
 
-.App > .main.v-enter-from {
+.App.is_backward_nav > .main.v-leave-active {
+  z-index: 2;
+}
+
+.App.is_forward_nav > .main.v-enter-from {
   transform: translate(100%, 0);
 }
 
-.App > .main.v-enter-to {
+.App.is_forward_nav > .main.v-enter-to {
   transform: translate(0, 0);
 }
 
-.App > .main.v-leave-from {
+.App.is_forward_nav > .main.v-leave-from {
   transform: translate(0, 0);
 }
 
-.App > .main.v-leave-to {
+.App.is_forward_nav > .main.v-leave-to {
   transform: translate(-30%, 0);
 }
 
-.App > .main.v-leave-active > .darken {
+.App.is_forward_nav > .main.v-leave-active > .darken {
   display: block;
   transition: opacity 0.5s ease;
 }
 
-.App > .main.v-leave-from > .darken {
+.App.is_forward_nav > .main.v-leave-from > .darken {
   opacity: 0;
 }
 
-.App > .main.v-leave-to > .darken {
+.App.is_forward_nav > .main.v-leave-to > .darken {
   opacity: 0.3;
+}
+
+.App.is_backward_nav > .main.v-enter-from {
+  transform: translate(-30%, 0);
+}
+
+.App.is_backward_nav > .main.v-enter-to {
+  transform: translate(0, 0);
+}
+
+.App.is_backward_nav > .main.v-leave-from {
+  transform: translate(0, 0);
+}
+
+.App.is_backward_nav > .main.v-leave-to {
+  transform: translate(100%, 0);
+}
+
+.App.is_backward_nav > .main.v-enter-active > .darken {
+  display: block;
+  transition: opacity 0.5s ease;
+}
+
+.App.is_backward_nav > .main.v-enter-from > .darken {
+  opacity: 0.3;
+}
+
+.App.is_backward_nav > .main.v-enter-to > .darken {
+  opacity: 0;
 }
 
 .App > .screen_blocker.v-enter-active {

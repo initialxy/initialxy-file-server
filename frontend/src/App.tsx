@@ -2,6 +2,7 @@ import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import { defineComponent, onMounted, Transition } from "vue";
+import { clx, isIOS } from "./utils/Misc";
 import Browser from "./components/Browser";
 import Header from "./components/Header";
 import store from "./store";
@@ -15,9 +16,17 @@ export default defineComponent({
     });
 
     const onUpClicked = () => store.dispatch("popDir");
+    // On iOS users will likely swipe from left to go back, so don't show
+    // animation, otherwise it will look like the page came back and then
+    // animated away.
+    const showBackAnimation = !isIOS();
 
     return () => (
-      <div class="App">
+      <div class={clx({
+        "App": true,
+        "is_forward_nav": store.state.isForwardNav,
+        "is_backward_nav": !store.state.isForwardNav && showBackAnimation,
+      })}>
         <Header class="header" title={store.state.title} />
         <Transition>
           <div class="main" key={store.state.curDir}>

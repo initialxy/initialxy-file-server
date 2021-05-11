@@ -55,6 +55,7 @@ export default createStore({
     thumbnails: new Map<string, string | null>(),
     shouldBlockScreen: false,
     visited: getVisitedFromStorage(),
+    isForwardNav: false,
   },
   mutations: {
     setRootDir(state, rootDir: string): void {
@@ -64,6 +65,7 @@ export default createStore({
       if (state.curDir === navData.contextPath) {
         return;
       }
+      state.isForwardNav = !!navData.isForwardNav;
       const newURL = normalizeURL(navData.contextPath, navData.isFile);
       if (navData.isFile === true) {
         state.shouldBlockScreen = true;
