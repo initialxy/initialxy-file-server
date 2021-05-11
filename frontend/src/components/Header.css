@@ -19,6 +19,7 @@
 }
 
 .Header .logo {
+  -webkit-tap-highlight-color: transparent;
   background-image: url("/logo_white.png");
   background-size: cover;
   height: 2em;

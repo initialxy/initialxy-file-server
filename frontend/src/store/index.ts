@@ -62,9 +62,6 @@ export default createStore({
       state.rootDir = rootDir;
     },
     setCurDir(state, navData: NavData): void {
-      if (state.curDir === navData.contextPath) {
-        return;
-      }
       state.isForwardNav = !!navData.isForwardNav;
       const newURL = normalizeURL(navData.contextPath, navData.isFile);
       if (navData.isFile === true) {
@@ -139,6 +136,12 @@ export default createStore({
       }
     },
     updateDir(context, navData: NavData): void {
+      if (
+        context.state.curDir === navData.contextPath &&
+        context.state.curDirInfo != null
+      ) {
+        return;
+      }
       context.commit("saveVisited", navData.contextPath);
       context.commit("setCurDir", navData);
       if (navData.isFile == null || !navData.isFile) {
