@@ -23,7 +23,6 @@ export function clx(clsDef: { [cls: string]: boolean }): string {
 }
 
 export function isIOS(): boolean {
-  return (/iPad|iPhone|iPod/.test(navigator.platform) ||
-    navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) &&
-    !window.MSStream
+  return /iPad|iPhone|iPod/.test(navigator.platform) ||
+    navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1
 }
