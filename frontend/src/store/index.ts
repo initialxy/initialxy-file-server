@@ -10,7 +10,7 @@ import {
 } from "../utils/URL";
 import { DirInfo } from "../jsgen/DirInfo";
 import { File } from "../jsgen/File";
-import { chunk, isIOS } from "../utils/Misc";
+import { chunk } from "../utils/Misc";
 
 const MAX_API_BATCH = 5;
 
@@ -127,13 +127,11 @@ export default createStore({
         );
       });
 
-      // On iOS, back will restore page state. Reset block screen when page
-      // becomes visible again after closing video.
-      if (isIOS()) {
-        window.addEventListener("pageshow", (_: Event) => {
-          context.commit("resetBlockScreen");
-        });
-      }
+      // On some platforms, back will restore page state instead of reload.
+      // Reset block screen when page becomes visible again after closing video.
+      window.addEventListener("pageshow", (_: Event) => {
+        context.commit("resetBlockScreen");
+      });
     },
     updateDir(context, navData: NavData): void {
       if (
