@@ -13,4 +13,5 @@ frontend/npm-debug.log*
 frontend/**/*.jsx.map
 frontend/**/*.jsx
 frontend/**/*.js.map
-frontend/**/*.js
+frontend/src/**/*.js
+frontend/dist/**/*.js
