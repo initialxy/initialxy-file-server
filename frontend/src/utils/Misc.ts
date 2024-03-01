@@ -13,11 +13,16 @@ export function first<T>(arr?: T[]): T | null {
 }
 
 export function clx(clsDef: { [cls: string]: boolean }): string {
-  const classes = [];
+  const classes: string[]  = [];
   for (const c in clsDef) {
     if (clsDef[c]) {
       classes.push(c);
     }
   }
   return classes.join(" ");
+}
+
+export function isIOS(): boolean {
+  return /iPad|iPhone|iPod/.test(navigator.platform) ||
+    navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1
 }
