@@ -52,7 +52,7 @@ onUnmounted(() => {
 const sizePx = computed(() => `${childSize.value}px`)
 
 const files = computed(() =>
-  store.curDirInfo?.baseDir === store.curDir ? (store.curDirInfo.dirInfo.contents ?? []) : [],
+  store.curDirInfo?.baseDir === store.curDir ? store.displayContent : [],
 )
 
 const thumbnails = computed(() => store.thumbnails)

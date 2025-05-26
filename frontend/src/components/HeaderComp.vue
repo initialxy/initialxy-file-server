@@ -2,11 +2,14 @@
   <div class="header">
     <a class="logo" :href="rootDir" @click.prevent="goToRoot" @touchstart.stop> </a>
     <h1>{{ title }}</h1>
+    <input type="text" v-model="searchQuery" placeholder="Search..." class="search-input" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useStore } from '../stores'
+import { ref, watch } from 'vue'
+import { debounce } from '../utils/Misc'
 
 const props = defineProps<{
   title: string
@@ -14,6 +17,16 @@ const props = defineProps<{
 
 const store = useStore()
 const rootDir = store.$state.rootDir
+
+const searchQuery = ref('')
+watch(
+  searchQuery,
+  debounce((newQuery: string, oldQuery: string) => {
+    if (newQuery !== oldQuery) {
+      store.updateSearchQuery(newQuery)
+    }
+  }, 100),
+)
 
 const goToRoot = () => {
   store.goToRoot()
@@ -28,6 +41,14 @@ const goToRoot = () => {
   color: white;
   display: flex;
   height: 3em;
+}
+
+.search-input {
+  margin-left: auto;
+  margin-right: 2em;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  border: none;
 }
 
 .header h1 {

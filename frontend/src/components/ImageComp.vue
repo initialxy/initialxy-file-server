@@ -12,12 +12,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const props = withDefaults(defineProps<{
-  src: string
-  shouldFadeIn?: boolean
-}>(), {
-  shouldFadeIn: false,
-})
+const props = withDefaults(
+  defineProps<{
+    src: string
+    shouldFadeIn?: boolean
+  }>(),
+  {
+    shouldFadeIn: false,
+  },
+)
 
 const isShown = ref(false)
 const onLoad = () => (isShown.value = true)

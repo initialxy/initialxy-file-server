@@ -18,3 +18,13 @@ export function isIOS(): boolean {
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
   )
 }
+
+export function debounce(cb: Function, waitMs: number) {
+  let timeout: ReturnType<typeof setTimeout>
+  return function (this: any, ...args: any[]) {
+    if (timeout) {
+      clearTimeout(timeout)
+    }
+    timeout = setTimeout(() => cb.apply(this, args), waitMs)
+  }
+}

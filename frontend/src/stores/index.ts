@@ -57,10 +57,23 @@ export const useStore = defineStore('main', () => {
   const shouldBlockScreen = ref(false)
   const visited = ref(getVisitedFromStorage())
   const isForwardNav = ref(false)
+  const searchQuery = ref('')
 
   // Getters
   const canPopDir = computed(() => {
     return curDir.value !== '/' && curDir.value !== rootDir.value
+  })
+
+  const displayContent = computed(() => {
+    if (curDirInfo.value == null) {
+      return []
+    }
+    if (searchQuery.value.trim() === '') {
+      return curDirInfo.value.dirInfo.contents
+    }
+    return curDirInfo.value.dirInfo.contents.filter(
+      (file) => file.name.toLowerCase().indexOf(searchQuery.value.trim().toLowerCase()) !== -1,
+    )
   })
 
   // Actions
@@ -91,6 +104,7 @@ export const useStore = defineStore('main', () => {
 
   function setCurDirInfo(dirInfo: CurDirInfo) {
     curDirInfo.value = dirInfo
+    searchQuery.value = ''
   }
 
   function addThumbnails(thumbnailPairs: ThumbnailPair[]) {
@@ -186,6 +200,10 @@ export const useStore = defineStore('main', () => {
     }
   }
 
+  function updateSearchQuery(newSearchQuery: string) {
+    searchQuery.value = newSearchQuery
+  }
+
   return {
     // State
     rootDir,
@@ -199,6 +217,7 @@ export const useStore = defineStore('main', () => {
 
     // Getters
     canPopDir,
+    displayContent,
 
     // Actions
     setRootDir,
@@ -215,5 +234,6 @@ export const useStore = defineStore('main', () => {
     popDir,
     goToRoot,
     fetchThumbnails,
+    updateSearchQuery,
   }
 })

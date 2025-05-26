@@ -24,15 +24,18 @@ import { File } from '../jsgen/File'
 import { getFriendlyFileName, normalizeURL, joinFileURL } from '../utils/URL'
 import ImageComp from './ImageComp.vue'
 
-const props = withDefaults(defineProps<{
-  baseDir: string,
-  file: File
-  thumbnail?: string,
-  onSelect?: (file: File) => void,
-  isVisited?: boolean
-}>(), {
-  isVisited: false,
-})
+const props = withDefaults(
+  defineProps<{
+    baseDir: string
+    file: File
+    thumbnail?: string
+    onSelect?: (file: File) => void
+    isVisited?: boolean
+  }>(),
+  {
+    isVisited: false,
+  },
+)
 
 function getFileIconClass(file: File): string {
   if (!file.is_file) {

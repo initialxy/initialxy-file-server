@@ -41,7 +41,6 @@ const shouldAnimateBackNav = !isIOS()
 </script>
 
 <style scoped>
-
 .app {
   background-color: #e3f6ff;
   background-position: center top;
