@@ -72,7 +72,10 @@ export const useStore = defineStore('main', () => {
       return curDirInfo.value.dirInfo.contents
     }
     return curDirInfo.value.dirInfo.contents.filter(
-      (file) => file.name.toLowerCase().indexOf(searchQuery.value.trim().toLowerCase()) !== -1,
+      (file) =>
+        getFriendlyFileName(file.name)
+          .toLowerCase()
+          .indexOf(searchQuery.value.trim().toLowerCase()) !== -1,
     )
   })
 

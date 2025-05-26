@@ -41,6 +41,7 @@ watch(model, (newValue) => {
 .search-input {
   border-radius: 0.5em;
   border: none;
+  color: #323232;
   font-size: 1em;
   padding: 0.2em 0.5em;
   width: 5em;
