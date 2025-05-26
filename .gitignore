@@ -15,3 +15,8 @@ frontend/**/*.jsx
 frontend/**/*.js.map
 frontend/src/**/*.js
 frontend/dist/**/*.js
+
+frontend_new/package-lock.json
+frontend_new/node_modules
+frontend_new/dist
+frontend_new/src/jsgen
