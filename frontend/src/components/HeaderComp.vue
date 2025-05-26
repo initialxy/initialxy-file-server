@@ -37,7 +37,7 @@ const goToRoot = () => {
   flex-grow: 1;
   font-size: 1.3em;
   font-weight: 300;
-  margin-right: 1.5em;
+  margin-right: 0.5em;
   overflow: hidden;
   padding: 0;
   text-overflow: ellipsis;
