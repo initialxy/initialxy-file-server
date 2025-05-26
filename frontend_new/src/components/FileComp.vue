@@ -19,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps } from 'vue'
-import type { PropType } from 'vue'
 import { emptyFunc, first } from '../utils/Misc'
 import { File } from '../jsgen/File'
 import { getFriendlyFileName, normalizeURL, joinFileURL } from '../utils/URL'

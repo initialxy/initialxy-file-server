@@ -1,21 +1,12 @@
-import { LRUCache } from 'lru-cache'
+import { LRUCache } from "lru-cache";
+import { Memoize } from "ts-memoize-decorator";
 
 /**
- * Wrapper to create LRU cache based Memoization decorator. Default to cache
- * size of 1000.
+ * Wrapper around ts-memoize-decorator to choose between Map vs LRU cache
+ * depending on decorator param
  */
-export default function (max?: number) {
-  return (originalMethod: any, _: ClassMethodDecoratorContext) => {
-    const cache = new LRUCache<string, any>({ max: max ?? 1000 })
-
-    return function (this: any, ...args: any[]) {
-      const key = JSON.stringify(args)
-      if (cache.has(key)) {
-        return cache.get(key)
-      }
-      const result = originalMethod.apply(this, args)
-      cache.set(key, result)
-      return result
-    }
-  }
+export default function (max?: number): MethodDecorator {
+  return Memoize({
+    cacheFactory: () => max != null ? new LRUCache<string, any>({ max }) : new Map(),
+  });
 }
