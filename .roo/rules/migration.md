@@ -1,3 +1,0 @@
-initialxy-file-server is a simple file browser that uses Python with Tornado as server and Vue as frontend.
-The frontend code currently resides in `frontend` directory. It's written in a very old version of Vue 3 beta and vuex, but uses a more React-like jsx style of component rendering.
-We are working on a migration effort to migrate the frontend to Vite + Vue 3 + Pinia. It should strive to uphold feature parity and type safety using TypeScript. We created a new directory, `frontend_new` that holds the new Vue 3 project, and we will work on migrating them gradually.

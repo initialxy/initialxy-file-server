@@ -36,7 +36,7 @@ To run this app in dev mode
 Then open a second terminal instance and run
 
     cd frontend
-    npm run serve
+    npm run dev
 
 Go to http://localhost:8080 in your browser.
 
