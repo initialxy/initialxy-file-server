@@ -200,10 +200,6 @@ export const useStore = defineStore('main', () => {
     }
   }
 
-  function updateSearchQuery(newSearchQuery: string) {
-    searchQuery.value = newSearchQuery
-  }
-
   return {
     // State
     rootDir,
@@ -214,6 +210,7 @@ export const useStore = defineStore('main', () => {
     shouldBlockScreen,
     visited,
     isForwardNav,
+    searchQuery,
 
     // Getters
     canPopDir,
@@ -234,6 +231,5 @@ export const useStore = defineStore('main', () => {
     popDir,
     goToRoot,
     fetchThumbnails,
-    updateSearchQuery,
   }
 })

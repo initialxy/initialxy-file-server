@@ -6,7 +6,7 @@
       is_backward_nav: !store.isForwardNav && shouldAnimateBackNav,
     }"
   >
-    <HeaderComp class="header" :title="store.title"> </HeaderComp>
+    <HeaderComp class="header"> </HeaderComp>
     <Transition>
       <div class="main" :key="store.curDir">
         <BrowserComp class="browser" />

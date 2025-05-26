@@ -22,7 +22,7 @@ export function isIOS(): boolean {
 export function debounce(cb: Function, waitMs: number) {
   let timeout: ReturnType<typeof setTimeout>
   return function (this: any, ...args: any[]) {
-    if (timeout) {
+    if (timeout != null) {
       clearTimeout(timeout)
     }
     timeout = setTimeout(() => cb.apply(this, args), waitMs)
