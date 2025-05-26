@@ -3,3 +3,5 @@
 thriftpyi thrift --output pygen --strict-optional
 cd frontend
 npm run build
+cd ../frontend_new
+npm run build

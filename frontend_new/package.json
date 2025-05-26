@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "thrift-typescript --outDir src/jsgen/ --sourceDir ../thirft ../thrift/types.thrift && run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
@@ -13,12 +13,20 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "buffer": "^6.0.3",
+    "lru-cache": "^11.1.0",
     "pinia": "^3.0.1",
+    "roboto-fontface": "^0.10.0",
+    "thrift": "^0.22.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@creditkarma/thrift-typescript": "^3.7.6",
     "@tsconfig/node22": "^22.0.1",
+    "@types/lru-cache": "^7.10.9",
     "@types/node": "^22.14.0",
+    "@types/thrift": "^0.10.17",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
