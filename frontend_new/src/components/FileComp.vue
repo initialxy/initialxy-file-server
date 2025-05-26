@@ -1,34 +1,40 @@
 <template>
   <a
-    :class="{ 'file-comp': true, folder: !props.file.is_file }"
+    :class="{ 'file-comp': true, folder: !file.is_file }"
     @click.prevent="onClick"
     @touchstart="emptyFunc"
     :href="fileURL"
   >
     <div class="inner">
       <div class="thumbnail_container">
-        <div class="icon fas" :class="getFileIconClass(props.file)"></div>
-        <ImageComp
-          v-if="props.thumbnail"
-          class="thumbnail"
-          :src="normalizeURL(props.thumbnail, true)"
-        />
+        <div class="icon fas" :class="getFileIconClass(file)"></div>
+        <ImageComp v-if="thumbnail" class="thumbnail" :src="normalizeURL(thumbnail, true)" />
       </div>
       <div class="file_name">
-        {{ getFriendlyFileName(props.file.name) }}
-        <div v-if="props.isVisited" class="visited"></div>
+        {{ getFriendlyFileName(file.name) }}
+        <div v-if="isVisited" class="visited"></div>
       </div>
     </div>
   </a>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { withDefaults, defineProps } from 'vue'
 import type { PropType } from 'vue'
 import { emptyFunc, first } from '../utils/Misc'
 import { File } from '../jsgen/File'
 import { getFriendlyFileName, normalizeURL, joinFileURL } from '../utils/URL'
-import ImageComp from './Image.vue'
+import ImageComp from './ImageComp.vue'
+
+const props = withDefaults(defineProps<{
+  baseDir: string,
+  file: File
+  thumbnail?: string,
+  onSelect?: (file: File) => void,
+  isVisited?: boolean
+}>(), {
+  isVisited: false,
+})
 
 function getFileIconClass(file: File): string {
   if (!file.is_file) {
@@ -50,36 +56,14 @@ function getFileIconClass(file: File): string {
   return 'fa-file'
 }
 
-export default defineComponent({
-  name: 'FileComp',
-  props: {
-    baseDir: { type: String, required: true },
-    file: { type: Object as PropType<File>, required: true },
-    thumbnail: String,
-    onSelect: Function as PropType<(file: File) => void>,
-    isVisited: { type: Boolean, default: false },
-  },
-  setup(props) {
-    const onClick = (e: Event) => {
-      e.preventDefault()
-      if (props.onSelect) {
-        props.onSelect(props.file)
-      }
-    }
+const onClick = (e: Event) => {
+  e.preventDefault()
+  if (props.onSelect) {
+    props.onSelect(props.file)
+  }
+}
 
-    const fileURL = normalizeURL(joinFileURL(props.baseDir, props.file), props.file.is_file)
-
-    return {
-      ImageComp,
-      emptyFunc,
-      getFileIconClass,
-      getFriendlyFileName,
-      normalizeURL,
-      onClick,
-      fileURL,
-    }
-  },
-})
+const fileURL = normalizeURL(joinFileURL(props.baseDir, props.file), props.file.is_file)
 </script>
 
 <style scoped>

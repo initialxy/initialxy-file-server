@@ -5,33 +5,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { useStore } from '../stores'
-import { emptyFunc } from '../utils/Misc'
 
-export default defineComponent({
-  name: 'Header',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-  },
-  setup() {
-    const store = useStore()
-    const rootDir = store.$state.rootDir
+const props = defineProps<{
+  title: string
+}>()
 
-    const goToRoot = () => {
-      store.goToRoot()
-    }
+const store = useStore()
+const rootDir = store.$state.rootDir
 
-    return {
-      rootDir,
-      goToRoot,
-    }
-  },
-})
+const goToRoot = () => {
+  store.goToRoot()
+}
 </script>
 
 <style scoped>

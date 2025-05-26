@@ -1,10 +1,34 @@
+<template>
+  <div
+    :class="{
+      app: true,
+      is_forward_nav: store.isForwardNav,
+      is_backward_nav: !store.isForwardNav && shouldAnimateBackNav,
+    }"
+  >
+    <HeaderComp class="header" :title="store.title"> </HeaderComp>
+    <Transition>
+      <div class="main" :key="store.curDir">
+        <BrowserComp class="browser" />
+        <div class="darken"></div>
+      </div>
+    </Transition>
+    <Transition>
+      <UpButton v-if="store.canPopDir" class="up_button" @click="onUpClicked" />
+    </Transition>
+    <Transition>
+      <div v-if="store.shouldBlockScreen" class="screen_blocker"></div>
+    </Transition>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useStore } from './stores'
-import Browser from './components/Browser.vue'
-import Header from './components/Header.vue'
+import BrowserComp from './components/BrowserComp.vue'
+import HeaderComp from './components/HeaderComp.vue'
 import UpButton from './components/UpButton.vue'
-import { clx, isIOS } from './utils/Misc'
+import { isIOS } from './utils/Misc'
 
 const store = useStore()
 
@@ -15,35 +39,6 @@ onMounted(() => {
 const onUpClicked = () => store.popDir()
 const shouldAnimateBackNav = !isIOS()
 </script>
-
-<template>
-  <div
-    :class="
-      clx({
-        app: true,
-        is_forward_nav: store.isForwardNav,
-        is_backward_nav: !store.isForwardNav && shouldAnimateBackNav,
-      })
-    "
-  >
-    <Header class="header" :title="store.title">
-    </Header>
-    <Transition>
-      <div class="main" :key="store.curDir">
-        <Browser class="browser" />
-        <div class="darken">
-        </div>
-      </div>
-    </Transition>
-    <Transition>
-      <UpButton v-if="store.canPopDir" class="up_button" @click="onUpClicked" />
-    </Transition>
-    <Transition>
-      <div v-if="store.shouldBlockScreen" class="screen_blocker">
-      </div>
-    </Transition>
-  </div>
-</template>
 
 <style scoped>
 html,

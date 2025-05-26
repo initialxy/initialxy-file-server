@@ -9,25 +9,18 @@
   />
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref, withDefaults, defineProps } from 'vue'
 
-export default defineComponent({
-  name: 'Image',
-  props: {
-    src: { type: String, required: true },
-    shouldFadeIn: { type: Boolean, default: false },
-  },
-  setup() {
-    const isShown = ref(false)
-    const onLoad = () => (isShown.value = true)
-
-    return {
-      isShown,
-      onLoad,
-    }
-  },
+const props = withDefaults(defineProps<{
+  src: string
+  shouldFadeIn?: boolean
+}>(), {
+  shouldFadeIn: false,
 })
+
+const isShown = ref(false)
+const onLoad = () => (isShown.value = true)
 </script>
 
 <style scoped>

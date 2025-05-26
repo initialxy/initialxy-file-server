@@ -6,24 +6,14 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { defineProps } from 'vue'
+import type { PropType } from 'vue'
 import { emptyFunc } from '../utils/Misc'
 
-export default defineComponent({
-  name: 'UpButton',
-  props: {
-    onClick: {
-      type: Function as PropType<() => void>,
-      required: true,
-    },
-  },
-  setup() {
-    return {
-      emptyFunc,
-    }
-  },
-})
+const props = defineProps<{
+  onClick: () => void
+}>()
 </script>
 
 <style scoped>

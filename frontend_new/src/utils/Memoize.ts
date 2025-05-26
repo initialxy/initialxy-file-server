@@ -5,7 +5,7 @@ import { LRUCache } from 'lru-cache'
  * size of 1000.
  */
 export default function (max?: number) {
-  return (originalMethod: any, context: ClassMethodDecoratorContext) => {
+  return (originalMethod: any, _: ClassMethodDecoratorContext) => {
     const cache = new LRUCache<string, any>({ max: max ?? 1000 })
 
     return function (this: any, ...args: any[]) {

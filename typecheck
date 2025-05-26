@@ -2,3 +2,5 @@
 mypy api.py
 cd frontend
 npm run typecheck
+cd ../frontend_new
+npm run type-check
