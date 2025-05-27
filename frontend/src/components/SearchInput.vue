@@ -1,5 +1,9 @@
 <template>
-  <input type="text" v-model="localValue" placeholder="Search..." class="search-input" />
+  <div class="search-input">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" v-model="localValue" />
+    <button class="fas fa-xmark clear-icon" @click="clearInput"></button>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -21,6 +25,10 @@ const model = defineModel<string>({
 
 const localValue = ref(props.value || '')
 
+const clearInput = () => {
+  localValue.value = ''
+}
+
 watch(
   localValue,
   debounce((newValue: string, oldValue: string) => {
@@ -39,11 +47,60 @@ watch(model, (newValue) => {
 
 <style scoped>
 .search-input {
-  border-radius: 0.5em;
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 1em;
+}
+
+.search-input input {
+  background-color: transparent;
   border: none;
-  color: #323232;
+  box-sizing: border-box;
+  color: white;
   font-size: 1em;
-  padding: 0.2em 0.5em;
+  left: 0;
+  outline: none;
+  position: absolute;
+  width: 100%;
+}
+
+.search-icon,
+.clear-icon {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+}
+
+.search-icon {
+  font-size: 1.2em;
+  left: 0;
+}
+
+.clear-icon {
+  display: none;
+  font-size: 1em;
+  right: -1.5em;
+}
+
+.search-input:focus-within {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
   width: 5em;
+}
+
+.search-input:focus-within input {
+  border-bottom: 1px solid white;
+}
+
+.search-input:focus-within .search-icon {
+  left: -1.5em;
+}
+
+.search-input:focus-within .clear-icon {
+  display: block;
 }
 </style>
