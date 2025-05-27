@@ -13,10 +13,6 @@ const props = defineProps<{
   value?: string
 }>()
 
-const emits = defineEmits<{
-  (event: 'input', value: string): void
-}>()
-
 const model = defineModel<string>({
   type: String,
   default: '',
